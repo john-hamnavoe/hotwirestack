@@ -1,0 +1,7 @@
+<% if notice.present? %>
+  <%= render "shared/flash_message", message: notice, color: "green" %>
+<% end %>
+
+<% if alert.present? %>
+  <%= render "shared/flash_message", message: alert, color: "red" %>
+<% end %>

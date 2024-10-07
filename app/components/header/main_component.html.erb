@@ -1,0 +1,10 @@
+<header class="bg-white">
+  <div data-controller="dropdown" data-action="click@window->dropdown#hide touchstart@window->dropdown#hide keydown.up->dropdown#previousItem keydown.down->dropdown#nextItem keydown.esc->dropdown#hide">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <%= render Header::LogoComponent.new %>
+      <%= render Header::MobileMenuToggleComponent.new %>
+      <%= render Header::DesktopMenuComponent.new(current_path: @current_path) %>
+    </nav>
+    <%= render Header::MobileMenuComponent.new(current_path: @current_path) %>
+  </div>
+</header>
