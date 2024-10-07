@@ -1,3 +1,4 @@
+require "ransack/helpers/form_helper"
 # frozen_string_literal: true
 
 class Index::SearchFormComponent < ApplicationComponent
