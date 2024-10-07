@@ -1,0 +1,10 @@
+<div data-controller="dropdown" data-action="click@window->dropdown#hide touchstart@window->dropdown#hide keydown.up->dropdown#previousItem keydown.down->dropdown#nextItem keydown.esc->dropdown#hide" class="hidden lg:flex lg:gap-x-12">
+  <%= render Header::DropdownComponent.new(
+    title: "Examples", 
+    items: [{ title: "Documents", path: documents_path, description: "Update and edit markdown documents" }], 
+    mobile: false
+  ) %>
+</div>
+<div class="hidden lg:flex lg:flex-1 lg:justify-end">
+  <%= link_to "About", about_index_path, class: "text-sm font-semibold leading-6 text-gray-900" %>
+</div>
