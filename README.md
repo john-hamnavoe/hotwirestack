@@ -9,6 +9,7 @@ application up and running.
 rails new hotwirestack -d postgresql --css=tailwind --javascript=esbuild
 ```
 
+
 ### Setup database.yml
 
 ```
@@ -35,6 +36,24 @@ production:
     migrations_paths: db/cable_migrate
 ```
 
+
+## Git Setup
+
+```
+git init
+git add .
+git commit -m "Initial commit"
+```
+
+Create a new repository on GitHub and push your local repository to it.
+
+```
+git remote add origin https://github.com/john-hamnavoe/hotwirestack.git
+git branch -M main
+git push -u origin main
+```
+
+
 ## Hatchbox 
 
 Create a new Hatchbox project and create 4 postgresql databases. Suffix each with _main, _cache, _queue, and _cable.
@@ -45,4 +64,12 @@ It will create new environment variables for you to use in your app, rename them
 CACHE_DATABASE_URL=
 QUEUE_DATABASE_URL=
 CABLE_DATABASE_URL=
+```
+
+Update the post deploy scripts to add (you on main app page use Edit option): 
+
+```
+bundle exec rails db:migrate:cable 
+bundle exec rails db:migrate:cache
+bundle exec rails db:migrate:queue
 ```
