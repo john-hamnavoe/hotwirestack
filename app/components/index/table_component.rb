@@ -2,18 +2,13 @@
 
 class Index::TableComponent < ApplicationComponent
   include Pagy::Frontend
-  attr_reader :frame, :items, :columns, :actions, :pagy
+  attr_reader :frame, :items, :columns, :pagy, :query
 
-  def initialize(frame:, items:, columns:, actions: {}, pagy: nil)
+  def initialize(frame:, items:, columns:, pagy: nil, query: nil)
     @frame = frame
     @items = items
     @columns = columns
-    @actions = actions
     @pagy = pagy
-  end
-
-  def render_action(item, action_name)
-    action_block = actions[action_name.to_sym]
-    action_block&.call(item)
+    @query = query
   end
 end

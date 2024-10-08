@@ -2,10 +2,10 @@
 
 <h1>New document</h1>
 
-<%= render "form", document: @document %>
+<%= render "form", document: @document, search_session_token: @search_session[:token] %>
 
 <br>
 
 <div>
-  <%= link_to "Back to documents", documents_path %>
+  <%= link_to "Back to documents", documents_path(search_session: @search_session[:token]) %>
 </div>

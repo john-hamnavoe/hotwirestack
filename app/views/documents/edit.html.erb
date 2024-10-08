@@ -2,11 +2,11 @@
 
 <h1>Editing document</h1>
 
-<%= render "form", document: @document %>
+<%= render "form", document: @document, search_session_token: @search_session[:token] %>
 
 <br>
 
 <div>
-  <%= link_to "Show this document", @document %> |
-  <%= link_to "Back to documents", documents_path %>
+  <%= link_to "Show this document", document_path(@document, search_session: @search_session[:token]) %> |
+  <%= link_to "Back to documents", documents_path(search_session: @search_session[:token]) %>
 </div>

@@ -3,8 +3,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents or /documents.json
   def index
-    @query = Document.ransack(params[:query])
-    @pagy, @documents = pagy(@query.result(distinct: true))
+    @query, @pagy, @documents = apply_search_session(Document)
   end
 
   # GET /documents/1 or /documents/1.json
@@ -25,7 +24,7 @@ class DocumentsController < ApplicationController
     @document = Document.new(document_params)
 
     if @document.save
-      redirect_to documents_path, notice: "Document was successfully created."
+      redirect_to documents_path(search_session: @search_session[:token]), notice: "Document was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +33,7 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1 or /documents/1.json
   def update
     if @document.update(document_params)
-      redirect_to documents_path, notice: "Document was successfully updated."
+      redirect_to documents_path(search_session: @search_session[:token]), notice: "Document was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,7 +44,7 @@ class DocumentsController < ApplicationController
     @document.destroy!
 
     respond_to do |format|
-      format.html { redirect_to documents_path, status: :see_other, notice: "Document was successfully destroyed." }
+      format.html { redirect_to documents_path(search_session: @search_session[:token]), status: :see_other, notice: "Document was successfully destroyed." }
       format.json { head :no_content }
     end
   end
