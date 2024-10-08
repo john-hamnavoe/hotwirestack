@@ -4,6 +4,7 @@
       <%= render Header::LogoComponent.new %>
       <%= render Header::MobileMenuToggleComponent.new %>
       <%= render Header::DesktopMenuComponent.new(current_path: @current_path) %>
+      <%= render Header::CacheStatusComponent.new %>
     </nav>
     <%= render Header::MobileMenuComponent.new(current_path: @current_path) %>
   </div>

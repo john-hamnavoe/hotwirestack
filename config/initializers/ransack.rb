@@ -3,3 +3,18 @@ Ransack.configure do |c|
   # Default key name is :q
   c.search_key = :query
 end
+
+# lib/ransack_extensions.rb
+module RansackExtensions
+  extend ActiveSupport::Concern
+
+  included do
+    def apply_default_sorts
+      self.sorts = "created_at desc" if sorts.empty?
+      self
+    end
+  end
+end
+
+# Include the module into Ransack::Search
+Ransack::Search.include(RansackExtensions)

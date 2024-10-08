@@ -13,6 +13,15 @@ rails new hotwirestack -d postgresql --css=tailwind --javascript=esbuild
 ### Setup database.yml
 
 ```
+development:
+  primary:
+    <<: *default
+    database: hotwirestack_development
+  cache:
+    <<: *default
+    database: hotwirestack_development_cache
+    migrations_paths: db/cache_migrate
+
 production:
   primary: &primary_production
     <<: *default
@@ -34,6 +43,14 @@ production:
     database: hotwirestack_production_cable
     url: <%= ENV["CABLE_DATABASE_URL"] %>
     migrations_paths: db/cable_migrate
+```
+
+### Development Databases 
+```
+rails db:create
+rails db:migrate
+rails db:create:cache
+rails db:migrate:cache
 ```
 
 

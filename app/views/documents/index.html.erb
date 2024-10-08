@@ -2,8 +2,6 @@
 
 <% frame = "documents_index" %>
 
-
-
 <%= render Index::ContainerComponent.new do |c| %>
   <% c.with_header do %>
     <%= render Index::HeaderComponent.new(
@@ -17,7 +15,8 @@
     <%= render Index::SearchFormComponent.new(
       query: @query,
       frame: frame,
-      placeholder: "Search documents"
+      placeholder: "Search documents",
+      search_session_token: @search_session[:token]
     ) %>
   <% end %>
 
@@ -26,16 +25,13 @@
     frame: frame,
     items: @documents,
     columns: [
-      { header: "Title", method: :title, primary: true },
-      { header: "Active", method: ->(doc) { doc.active ? "Yes" : "No" } },
-      { header: "Edit", type: :action, action: :edit, sr_only: true },
-      { header: "Delete", type: :action, action: :delete, sr_only: true }
+      { header: "Title", attribute: :title, primary: true },
+      { header: "Active", attribute: :active, method: ->(doc) { doc.active ? "Yes" : "No" } },
+      { header: "Edit", type: :action, action: ->(document) { link_to "Edit", edit_document_path(document, search_session: @search_session[:token]), class: "text-indigo-600 hover:text-indigo-900", data: { turbo_frame: :_top }  }, sr_only: true},
+      { header: "Delete", type: :action, action: ->(document) { button_to "Delete", document_path(document, search_session: @search_session[:token]), method: :delete, class: "text-red-600 hover:text-red-900", form: { data: { turbo_confirm: 'Are you sure?' } } }, sr_only: true }
     ],
-    actions: {
-      edit: ->(document) { link_to "Edit", edit_document_path(document), class: "text-indigo-600 hover:text-indigo-900" },
-      delete: ->(document) { button_to "Delete", document_path(document), method: :delete, class: "text-red-600 hover:text-red-900", form: { data: { turbo_confirm: 'Are you sure?' } } }
-      },
-      pagy: @pagy
+    pagy: @pagy,
+    query: @query
     ) %>
   <% end %>
 <% end %>

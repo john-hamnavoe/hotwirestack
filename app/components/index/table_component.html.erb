@@ -6,7 +6,14 @@
           <thead>
             <tr>
               <% columns.each do |column| %>
-                <th scope="col" class="py-1.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0 <%= 'sr-only' if column[:sr_only] %>"><%= column[:header] %></th>
+                <th scope="col" class="py-1.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0 <%= 'sr-only' if column[:sr_only] %>">
+                 <div class="flex justify-between">
+                 <%= sort_link(query, column[:attribute], column[:header]) %>
+
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                    <path d="M10 3.75a2 2 0 1 0-4 0 2 2 0 0 0 4 0ZM17.25 4.5a.75.75 0 0 0 0-1.5h-5.5a.75.75 0 0 0 0 1.5h5.5ZM5 3.75a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 .75.75ZM4.25 17a.75.75 0 0 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5h1.5ZM17.25 17a.75.75 0 0 0 0-1.5h-5.5a.75.75 0 0 0 0 1.5h5.5ZM9 10a.75.75 0 0 1-.75.75h-5.5a.75.75 0 0 1 0-1.5h5.5A.75.75 0 0 1 9 10ZM17.25 10.75a.75.75 0 0 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5h1.5ZM14 10a2 2 0 1 0-4 0 2 2 0 0 0 4 0ZM10 16.25a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z" />
+                  </svg>
+                </th>
               <% end %>
             </tr>
           </thead>
@@ -16,11 +23,11 @@
                 <% columns.each do |column| %>
                   <% if column[:type] == :action %>
                     <td class="whitespace-nowrap py-1 pl-4 pr-3 text-sm text-gray-900 sm:pl-0 font-medium text-right">
-                      <%= render_action(item, column[:action]) %>
+                      <%= column[:action]&.call(item) %>
                     </td>
                   <% else %>
-                    <td class="whitespace-nowrap py-1 pl-4 pr-3 text-sm text-gray-900 sm:pl-0 <%= 'font-medium' if column[:primary] %>">
-                      <%= column[:method].is_a?(Proc) ? column[:method].call(item) : item.public_send(column[:method]) %>
+                    <td class="whitespace-nowrap py-1 pl-4 pr-3 text-sm text-gray-900 sm:pl-0 <%= 'font-medium' if column[:primary] %>">                     
+                      <%= column[:method].is_a?(Proc) ? column[:method].call(item) : item.public_send(column[:attribute]) %>
                     </td>
                   <% end %>
                 <% end %>
