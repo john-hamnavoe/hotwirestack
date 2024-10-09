@@ -51,9 +51,13 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "standard"
+  gem "pry"
+  gem "pry-remote"
 end
 
 group :development do
+  gem "annotate"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
