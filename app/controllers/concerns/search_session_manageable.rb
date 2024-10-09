@@ -20,7 +20,7 @@ module SearchSessionManageable
   def set_search_session
     token, session_key = search_session_key
     @search_session = Rails.cache.read(session_key) || initialize_search_session(token)
-    update_search_session(sanitized_query_params, params[:page])
+    update_search_session
     write_cache(session_key)
   end
 
@@ -38,21 +38,31 @@ module SearchSessionManageable
     {
       token: token,
       query: sanitized_query_params,
+      sort: query_sort_params,
       page: params[:page]
     }
   end
 
-  def update_search_session(query, page)
-    @search_session[:query] = query if query.present?
-    @search_session[:page] = page if page.present?
+  def update_search_session
+    @search_session[:query] = sanitized_query_params
+    @search_session[:page] = page_params if page_params.present?
+    @search_session[:sort] = query_sort_params if query_sort_params.present?
   end
 
   def sanitized_query_params
     if query_params.is_a?(ActionController::Parameters)
-      query_params.permit!.to_h  # Ensure it's a permitted hash
+      query_params.except(:s).permit!.to_h  # Ensure it's a permitted hash
     else
       {}
     end
+  end
+
+  def page_params
+    params[:page]
+  end
+
+  def query_sort_params
+    params[:query]&.dig(:s)
   end
 
   def query_params
@@ -60,7 +70,7 @@ module SearchSessionManageable
   end
 
   def apply_search_session(base_query)
-    page = search_params(:page)
+    page = search_session_params(:page)
     query = build_query(base_query)
 
     pagy, results = pagy(query.result(distinct: true), page: page)
@@ -69,12 +79,15 @@ module SearchSessionManageable
   end
 
   def build_query(base_query)
-    ransack_query_params = search_params(:query)
-    base_query.ransack(ransack_query_params).apply_default_sorts
+    ransack_query_params = search_session_params(:query)
+    base_query.ransack(ransack_query_params).apply_default_sorts(search_session_sort_criteria)
   end
 
-  def search_params(key)
-    Rails.logger.debug("Search session: #{@search_session.inspect}, Key: #{key}, Params: #{params.inspect}")
+  def search_session_params(key)
     CacheConfig.cache_enabled? ? @search_session[key] : params[key]
+  end
+
+  def search_session_sort_criteria
+    CacheConfig.cache_enabled? ? @search_session&.dig(:sort) : query_sort_params
   end
 end

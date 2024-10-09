@@ -5,5 +5,5 @@
       <% field.with_input_text(autofocus: true) %>
     <% end %>    
   <% end %>     
-  <%= render Forms::FooterComponent.new(form, documents_path)  %>
+  <%= render Forms::FooterComponent.new(form, documents_path(search_session: search_session_token))  %>
 <% end %>

@@ -3,6 +3,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents or /documents.json
   def index
+    Rails.logger.info("Search session: #{@search_session.inspect}")
     @query, @pagy, @documents = apply_search_session(Document)
   end
 

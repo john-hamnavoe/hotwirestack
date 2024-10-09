@@ -9,7 +9,8 @@ module RansackExtensions
   extend ActiveSupport::Concern
 
   included do
-    def apply_default_sorts
+    def apply_default_sorts(sort_params)
+      self.sorts = sort_params if sort_params.present?
       self.sorts = "created_at desc" if sorts.empty?
       self
     end
