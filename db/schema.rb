@@ -10,13 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_07_133828) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_09_131449) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "documents", force: :cascade do |t|
     t.string "title"
     t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "index_view_columns", force: :cascade do |t|
+    t.bigint "index_view_id", null: false
+    t.bigint "table_column_id", null: false
+    t.integer "position"
+    t.boolean "display", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["index_view_id"], name: "index_index_view_columns_on_index_view_id"
+    t.index ["table_column_id"], name: "index_index_view_columns_on_table_column_id"
+  end
+
+  create_table "index_views", force: :cascade do |t|
+    t.bigint "table_entity_id", null: false
+    t.string "name"
+    t.boolean "default", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["table_entity_id"], name: "index_index_views_on_table_entity_id"
+  end
+
+  create_table "table_columns", force: :cascade do |t|
+    t.bigint "table_entity_id", null: false
+    t.string "header"
+    t.string "attribute_name"
+    t.integer "position"
+    t.integer "column_type", default: 0
+    t.boolean "primary", default: false
+    t.boolean "sr_only", default: false
+    t.boolean "method_proc", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["table_entity_id", "position"], name: "index_table_columns_on_table_entity_id_position", unique: true
+    t.index ["table_entity_id"], name: "index_table_columns_on_table_entity_id"
+  end
+
+  create_table "table_entities", force: :cascade do |t|
+    t.string "model_class_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -52,5 +93,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_07_133828) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  add_foreign_key "index_view_columns", "index_views"
+  add_foreign_key "index_view_columns", "table_columns"
+  add_foreign_key "index_views", "table_entities"
+  add_foreign_key "table_columns", "table_entities"
   add_foreign_key "taggings", "tags"
 end

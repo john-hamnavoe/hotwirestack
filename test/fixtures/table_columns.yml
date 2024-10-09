@@ -1,0 +1,47 @@
+# == Schema Information
+#
+# Table name: table_columns
+#
+#  id              :bigint           not null, primary key
+#  attribute_name  :string
+#  column_type     :integer          default("standard")
+#  header          :string
+#  method_proc     :boolean          default(FALSE)
+#  position        :integer
+#  primary         :boolean          default(FALSE)
+#  sr_only         :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  table_entity_id :bigint           not null
+#
+# Indexes
+#
+#  index_table_columns_on_table_entity_id           (table_entity_id)
+#  index_table_columns_on_table_entity_id_position  (table_entity_id,position) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (table_entity_id => table_entities.id)
+#
+
+one:
+  header: MyString
+  attribute_name: MyString
+  position: 1
+  column_type: 1
+  table_configuration: one
+  table_configuration_type: Table configuration
+  primary: false
+  sr_only: false
+  method_proc: false
+
+two:
+  header: MyString
+  attribute_name: MyString
+  position: 1
+  column_type: 1
+  table_configuration: two
+  table_configuration_type: Table configuration
+  primary: false
+  sr_only: false
+  method_proc: false

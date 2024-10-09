@@ -1,3 +1,32 @@
+# SearchSessionManageable
+#
+# This module provides functionality for managing search sessions in Rails controllers.
+# It handles caching, initialization, and updating of search parameters across requests.
+#
+# Key features:
+# - Automatic search session management (can be disabled)
+# - Caching of search parameters (query, sort, page)
+# - Integration with Ransack for query building
+# - Pagination support
+#
+# Usage:
+# Include this module in controllers where search session management is needed.
+# The module hooks into the controller's action cycle via a before_action.
+# It is automatically included in ApplicationController.
+# To disable search session management, call `disable_search_session_management` in the controller.
+#
+# The controller must pass the search session token to the view via the `search_session` parameter on redirects etc.
+# For example:
+#   redirect_to documents_path(search_session: @search_session[:token])
+#
+# Edit and new links etc. should also pass the search session token to the server.
+# For example:
+#   <%= link_to "Edit", edit_document_path(document, search_session: @search_session[:token]) %>
+#
+# Forms can use the `search_session_hidden_field` helper to pass the search session token to the server.
+# For example:
+#   <%= search_session_hidden_field(@search_session[:token]) %>
+#
 module SearchSessionManageable
   extend ActiveSupport::Concern
 
@@ -44,7 +73,7 @@ module SearchSessionManageable
   end
 
   def update_search_session
-    @search_session[:query] = sanitized_query_params
+    @search_session[:query] = sanitized_query_params if sanitized_query_params.present?
     @search_session[:page] = page_params if page_params.present?
     @search_session[:sort] = query_sort_params if query_sort_params.present?
   end

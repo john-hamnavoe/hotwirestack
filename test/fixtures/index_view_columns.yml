@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: index_view_columns
+#
+#  id              :bigint           not null, primary key
+#  display         :boolean          default(TRUE)
+#  position        :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  index_view_id   :bigint           not null
+#  table_column_id :bigint           not null
+#
+# Indexes
+#
+#  index_index_view_columns_on_index_view_id    (index_view_id)
+#  index_index_view_columns_on_table_column_id  (table_column_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (index_view_id => index_views.id)
+#  fk_rails_...  (table_column_id => table_columns.id)
+#
+
+one:
+  index_view: one
+  table_column: one
+  position: 1
+
+two:
+  index_view: two
+  table_column: two
+  position: 1
