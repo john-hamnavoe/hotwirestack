@@ -1,0 +1,4 @@
+<div class="flex items-start <%= classes %>">
+  <%= form.check_box field, {class: "disabled:text-gray-700 h-4 w-4 rounded text-indigo-600 focus:ring-indigo-500", oninput: oninput, disabled: read_only, include_hidden: include_hidden, data: data }, checked_value, unchecked_value %>
+  <%= form.label label || field, class: "-mt-0.5 ml-3 text-sm font-medium text-gray-900" unless suppress_label %>
+</div>

@@ -16,7 +16,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_07_133828) do
 
   create_table "documents", force: :cascade do |t|
     t.string "title"
-    t.boolean "active"
+    t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

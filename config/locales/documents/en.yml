@@ -1,0 +1,10 @@
+en:
+  documents:
+    index:
+      title: "Documents"
+      new_document: "New document"
+      search_placeholder: "Search documents"
+    edit:
+      title: "Edit document"
+    new:
+      title: "New document"

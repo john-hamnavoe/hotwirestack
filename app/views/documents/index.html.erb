@@ -5,9 +5,9 @@
 <%= render Index::ContainerComponent.new do |c| %>
   <% c.with_header do %>
     <%= render Index::HeaderComponent.new(
-      title: "Documents",
-      action_text: "New document",
-      action_path: new_document_path
+      title: t(".title"),
+      action_text: t(".new_document"),
+      action_path: new_document_path(search_session: @search_session[:token])
     ) %>
   <% end %>
 
@@ -15,7 +15,7 @@
     <%= render Index::SearchFormComponent.new(
       query: @query,
       frame: frame,
-      placeholder: "Search documents",
+      placeholder: t(".search_placeholder"),
       search_session_token: @search_session[:token]
     ) %>
   <% end %>

@@ -1,12 +1,5 @@
-<% content_for :title, "Editing document" %>
 
-<h1>Editing document</h1>
 
-<%= render "form", document: @document, search_session_token: @search_session[:token] %>
-
-<br>
-
-<div>
-  <%= link_to "Show this document", document_path(@document, search_session: @search_session[:token]) %> |
-  <%= link_to "Back to documents", documents_path(search_session: @search_session[:token]) %>
-</div>
+<%= render Forms::PageComponent.new(title: t(".title"), model: @document) do %>
+  <%= render "form", document: @document, search_session_token: @search_session[:token] %>
+<% end %>

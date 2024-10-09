@@ -29,3 +29,8 @@
 
 en:
   hello: "Hello world"
+  errors:
+    not_saved: "There were some errors that prevented the save:"
+  buttons:
+    submit: "Save"
+    cancel: "Cancel"

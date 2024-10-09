@@ -1,0 +1,16 @@
+<% if model.errors.any? %>
+  <div id="error_explanation" class="bg-red-50 border-l-4 border-red-900 text-red-600 p-4 mb-2">
+    <h2>
+      <%= I18n.t("errors.not_saved",
+                 count: model.errors.count,
+                 resource: model.class.model_name.human.downcase)
+       %>
+    </h2>
+    <ul class="pl-1">
+      <% model.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
