@@ -2,6 +2,8 @@
 #
 #                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
 #                                                 /assets                                                                                           Propshaft::Server
+#                              about_index GET    /about/index(.:format)                                                                            about#index
+#                                     root GET    /                                                                                                 home#index
 #                                documents GET    /documents(.:format)                                                                              documents#index
 #                                          POST   /documents(.:format)                                                                              documents#create
 #                             new_document GET    /documents/new(.:format)                                                                          documents#new
@@ -10,8 +12,9 @@
 #                                          PATCH  /documents/:id(.:format)                                                                          documents#update
 #                                          PUT    /documents/:id(.:format)                                                                          documents#update
 #                                          DELETE /documents/:id(.:format)                                                                          documents#destroy
-#                              about_index GET    /about/index(.:format)                                                                            about#index
-#                                     root GET    /                                                                                                 home#index
+#                               index_view GET    /index_views/:id(.:format)                                                                        index_views#show
+#               index_view_column_position PATCH  /index_view_columns/:index_view_column_id/position(.:format)                                      index_view_columns/position#update
+#                                          PUT    /index_view_columns/:index_view_column_id/position(.:format)                                      index_view_columns/position#update
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
@@ -41,9 +44,14 @@
 #                     rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
-  resources :documents
   get "about/index"
   root "home#index"
+
+  resources :documents
+  resources :index_views, only: [:show]
+  resources :index_view_columns, only: [] do
+    resource :position, only: [:update], controller: "index_view_columns/position"
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

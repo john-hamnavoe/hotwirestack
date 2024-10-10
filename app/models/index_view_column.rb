@@ -24,7 +24,9 @@ class IndexViewColumn < ApplicationRecord
   belongs_to :index_view
   belongs_to :table_column
 
-  delegate :header, :attribute_name, :column_type, :method_proc, :primary, :sr_only, to: :table_column, prefix: false
+  acts_as_list scope: [:index_view_id, :display]
+
+  delegate :header, :attribute_name, :column_type, :method_proc, :primary, :sr_only, to: :table_column, prefix: true
   delegate :model_class_name, to: :table_column, prefix: false
 
   scope :displayed, -> { includes(:table_column).where(display: true).order(:position) }

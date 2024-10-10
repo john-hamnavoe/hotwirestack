@@ -17,11 +17,3 @@
 #
 #  fk_rails_...  (table_entity_id => table_entities.id)
 #
-
-one:
-  table_entity: one
-  default: false
-
-two:
-  table_entity: two
-  default: false

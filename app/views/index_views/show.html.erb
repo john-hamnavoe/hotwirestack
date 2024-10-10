@@ -1,0 +1,24 @@
+<%= turbo_frame_tag dom_id(@index_view) do %>
+  <div  class="sm:grid sm:grid-cols-2 sm:gap-4">
+    <div class="rounded-md bg-white shadow">
+      <%= render Forms::LabelComponent.new(title: t(".visible_columns"), classes: "border-gray-200 border bg-gray-100 px-1 py-1", large: true)%>
+      <ul data-controller="sortable" data-id="visibile-columns" data-sortable-group-value="columns" data-sortable-column-id="1" role="list" class="divide-y divide-gray-200">
+        <% @index_view.displayed_index_view_columns.each do |index_view_column| %>
+          <%= content_tag :li, data: { id: index_view_column.table_column_id, sortable_update_url: index_view_column_position_path(index_view_column) }, class: "px-1 py-1 hover:cursor-pointer text-gray-700" do %>
+            <%= index_view_column.table_column_header %>         
+          <% end %>      
+        <% end %>
+      </ul>          
+    </div>
+    <div class="rounded-md bg-white shadow">
+      <%= render Forms::LabelComponent.new(title: t(".hidden_columns"), classes: "border-gray-200 border bg-gray-100 px-1 py-1", large: true)%>
+      <ul data-controller="sortable" data-id="hidden-columns" data-sortable-group-value="columns" data-sortable-column-id="0" role="list" class="divide-y divide-gray-200">
+        <% @index_view.hidden_index_view_columns.each do |index_view_column| %>
+          <%= content_tag :li, data: { id: index_view_column.table_column_id, sortable_update_url: index_view_column_position_path(index_view_column)}, class: "px-1 py-1 hover:cursor-pointer text-gray-700" do %>
+            <%= index_view_column.table_column_header %>
+          <% end %>      
+        <% end %>
+      </ul>          
+    </div>
+  </div>   
+<% end %>
