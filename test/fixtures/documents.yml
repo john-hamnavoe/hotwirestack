@@ -10,9 +10,9 @@
 #
 
 one:
-  title: MyString
+  title: Document One 
   active: false
 
 two:
-  title: MyString
-  active: false
+  title: Document Two
+  active: true

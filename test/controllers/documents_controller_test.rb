@@ -2,47 +2,48 @@ require "test_helper"
 
 class DocumentsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    IndexView.create_default_views
     @document = documents(:one)
   end
 
   test "should get index" do
-    get documents_url
+    get documents_path
     assert_response :success
   end
 
   test "should get new" do
-    get new_document_url
+    get new_document_path
     assert_response :success
   end
 
   test "should create document" do
     assert_difference("Document.count") do
-      post documents_url, params: {document: {active: @document.active, title: @document.title}}
+      post documents_path, params: {search_session: "XXXXX", document: {active: @document.active, title: @document.title}}
     end
 
-    assert_redirected_to document_url(Document.last)
+    assert_redirected_to documents_path(search_session: "XXXXX")
   end
 
   test "should show document" do
-    get document_url(@document)
+    get document_path(@document)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_document_url(@document)
+    get edit_document_path(@document)
     assert_response :success
   end
 
   test "should update document" do
-    patch document_url(@document), params: {document: {active: @document.active, title: @document.title}}
-    assert_redirected_to document_url(@document)
+    patch document_path(@document), params: {search_session: "XXXXX", document: {active: @document.active, title: @document.title}}
+    assert_redirected_to documents_path(search_session: "XXXXX")
   end
 
   test "should destroy document" do
     assert_difference("Document.count", -1) do
-      delete document_url(@document)
+      delete document_path(@document, params: {search_session: "XXXXX"})
     end
 
-    assert_redirected_to documents_url
+    assert_redirected_to documents_path(search_session: "XXXXX")
   end
 end

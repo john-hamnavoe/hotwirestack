@@ -3,10 +3,21 @@
 require "test_helper"
 
 class Forms::FooterComponentTest < ViewComponent::TestCase
-  def test_component_renders_something_useful
-    # assert_equal(
-    #   %(<span>Hello, components!</span>),
-    #   render_inline(Forms::FooterComponent.new(message: "Hello, components!")).css("span").to_html
-    # )
+  def setup
+    @document = Document.new(title: "Sample Title")  # Using a model to generate a real form
+    @field = :title
+  end
+
+  def test_generates_footer
+    form_for @document, url: "#" do |form|
+      # Render the TextInputComponent within the form
+      render_inline(Forms::FooterComponent.new(form, "example.com"))
+
+      # page.native.to_html
+      assert_selector "button", text: "Save"
+      assert_selector "a[href='example.com']", text: "Cancel"
+      assert_selector "label", text: "Active"
+      assert_selector 'input[type="checkbox"]'
+    end
   end
 end

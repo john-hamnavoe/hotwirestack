@@ -1,0 +1,2 @@
+module IndexViewColumns::PositionHelper
+end

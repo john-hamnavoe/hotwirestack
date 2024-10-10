@@ -2,6 +2,7 @@
 
 <% frame = "documents_index" %>
 
+
 <%= render Index::ContainerComponent.new do |c| %>
   <% c.with_header do %>
     <%= render Index::HeaderComponent.new(
@@ -18,7 +19,15 @@
       search_field_predicate: :title_cont,
       placeholder: t(".search_placeholder"),
       search_session_token: @search_session[:token]
-    ) %>
+    ) do |s| %>
+      <% s.with_column_config_dropdown do %>
+        <%= render Index::ColumnConfigDropdownComponent.new(
+          index_view: @index_view,
+          refresh_frame: frame,
+          refresh_path: documents_path(search_session: @search_session[:token])
+        ) %>
+      <% end %>
+    <% end %>
   <% end %>
 
   <% c.with_table do %>
@@ -32,3 +41,4 @@
     ) %>
   <% end %>
 <% end %>
+

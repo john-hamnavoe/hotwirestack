@@ -21,12 +21,4 @@
 #  fk_rails_...  (table_column_id => table_columns.id)
 #
 
-one:
-  index_view: one
-  table_column: one
-  position: 1
 
-two:
-  index_view: two
-  table_column: two
-  position: 1

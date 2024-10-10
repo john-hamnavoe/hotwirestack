@@ -3,10 +3,13 @@
 require "test_helper"
 
 class Forms::PageComponentTest < ViewComponent::TestCase
-  def test_component_renders_something_useful
-    # assert_equal(
-    #   %(<span>Hello, components!</span>),
-    #   render_inline(Forms::PageComponent.new(message: "Hello, components!")).css("span").to_html
-    # )
+  def test_renders_page
+    model = Document.new(title: "Test")
+    component = Forms::PageComponent.new(title: "Test", description: "This is a test page", model: model)
+    render_inline(component)
+
+    assert_selector "div", class: "bg-white"
+    assert_selector "h1", text: "Test"
+    assert_selector "h2", text: "This is a test page"
   end
 end

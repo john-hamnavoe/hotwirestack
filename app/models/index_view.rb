@@ -21,6 +21,9 @@ class IndexView < ApplicationRecord
   belongs_to :table_entity
 
   has_many :index_view_columns, dependent: :destroy
+  has_many :displayed_index_view_columns, -> { displayed.order(:position) }, class_name: "IndexViewColumn"
+  has_many :hidden_index_view_columns, -> { hidden.order(:position) }, class_name: "IndexViewColumn"
+  accepts_nested_attributes_for :index_view_columns, allow_destroy: true
 
   delegate :model_class_name, to: :table_entity, prefix: true
 
@@ -28,12 +31,12 @@ class IndexView < ApplicationRecord
     index_view_columns.displayed.map do |column|
       {
         model_class_name: table_entity_model_class_name,
-        header: column.header,
-        attribute_name: column.attribute_name.to_sym,
-        type: column.column_type.to_sym,
-        primary: column.primary,
-        sr_only: column.sr_only,
-        method: column.method_proc
+        header: column.table_column_header,
+        attribute_name: column.table_column_attribute_name.to_sym,
+        type: column.table_column_column_type.to_sym,
+        primary: column.table_column_primary,
+        sr_only: column.table_column_sr_only,
+        method: column.table_column_method_proc
       }
     end
   end

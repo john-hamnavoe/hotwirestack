@@ -3,10 +3,8 @@
 require "test_helper"
 
 class Forms::FieldsContainerComponentTest < ViewComponent::TestCase
-  def test_component_renders_something_useful
-    # assert_equal(
-    #   %(<span>Hello, components!</span>),
-    #   render_inline(Forms::FieldsContainerComponent.new(message: "Hello, components!")).css("span").to_html
-    # )
+  def test_renders_fields_container
+    render_inline(Forms::FieldsContainerComponent.new(model: Document.new))
+    assert_selector "div", count: 2
   end
 end

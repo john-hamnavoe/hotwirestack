@@ -13,3 +13,7 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+class ViewComponent::TestCase
+  include ActionView::Helpers::FormHelper  # Include FormHelper to use `form_for`
+end

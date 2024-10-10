@@ -6,3 +6,9 @@ import { application } from "./application"
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import ReloadDropdownController from "./reload_dropdown_controller"
+application.register("reload-dropdown", ReloadDropdownController)
+
+import SortableController from "./sortable_controller"
+application.register("sortable", SortableController)
