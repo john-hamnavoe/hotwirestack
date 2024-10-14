@@ -29,7 +29,7 @@
         <% end %>
       </ul>
       <% if @index_view.active_filter_id.present? %>
-        <%= render Index::ClearFilterButtonComponent.new(index_view: @index_view, search_session: @search_session) %>
+        <%= render Index::ClearFilterButtonComponent.new(index_view: @index_view, search_session: @search_session[:token]) %>
       <% end %>
       <div class="mt-6 px-4">
         <%= render Button::ActionComponent.new(path: new_index_view_filter_path(@index_view, search_session: @search_session[:token]), text: t(".add_filter"), data: { turbo_frame: dom_id(@index_view, :filter) }) %>
