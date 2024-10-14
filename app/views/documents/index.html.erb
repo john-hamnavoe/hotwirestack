@@ -2,43 +2,13 @@
 
 <% frame = "documents_index" %>
 
-
 <%= render Index::ContainerComponent.new do |c| %>
-  <% c.with_header do %>
-    <%= render Index::HeaderComponent.new(
-      title: t(".title"),
-      action_text: t(".new_document"),
-      action_path: new_document_path(search_session: @search_session[:token])
-    ) %>
+  <% c.with_header(title: t(".title"), action_text: t(".new_document"), action_path: new_document_path(search_session: @search_session[:token])) %>
+
+  <% c.with_search_form(query: @query, frame: frame, search_field_predicate: :title_cont, placeholder: t(".search_placeholder"), search_session_token: @search_session[:token]) do |s| %>
+    <% s.with_config_dropdowns(index_view: @index_view, refresh_frame: frame, refresh_path: documents_path(search_session: @search_session[:token]), search_session_token: @search_session[:token])  %>
   <% end %>
 
-  <% c.with_search_form do %>
-    <%= render Index::SearchFormComponent.new(
-      query: @query,
-      frame: frame,
-      search_field_predicate: :title_cont,
-      placeholder: t(".search_placeholder"),
-      search_session_token: @search_session[:token]
-    ) do |s| %>
-      <% s.with_column_config_dropdown do %>
-        <%= render Index::ColumnConfigDropdownComponent.new(
-          index_view: @index_view,
-          refresh_frame: frame,
-          refresh_path: documents_path(search_session: @search_session[:token])
-        ) %>
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <% c.with_table do %>
-  <%= render Index::TableComponent.new(
-    frame: frame,
-    items: @documents,
-    columns: @index_view.displayed_columns,
-    search_session_token: @search_session[:token],
-    pagy: @pagy,
-    query: @query
-    ) %>
-  <% end %>
+  <% c.with_table(frame: frame, items: @documents, query: @query, pagy: @pagy, index_view: @index_view, search_session_token: @search_session[:token]) %>
 <% end %>
 

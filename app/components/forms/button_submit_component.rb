@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Forms::ButtonSubmitComponent < ApplicationComponent
-  attr_reader :text, :width, :data
+  private attr_reader :text, :width, :data
 
   def initialize(text: nil, width: "w-auto", data: nil)
     @text = text

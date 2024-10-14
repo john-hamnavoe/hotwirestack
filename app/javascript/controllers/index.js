@@ -7,6 +7,9 @@ import { application } from "./application"
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import NestedFormController from "./nested_form_controller"
+application.register("nested-form", NestedFormController)
+
 import ReloadDropdownController from "./reload_dropdown_controller"
 application.register("reload-dropdown", ReloadDropdownController)
 

@@ -1,0 +1,6 @@
+<template data-nested-form-target="template" >
+  <%= form.fields_for field, template_object, child_index: template_name do |form_fields| %>
+    <input type="hidden" id="<%= name %>" name="<%= name %>" value="<%= template_name %>">
+    <%= render partial, {form: form_fields, locked: false}.merge(locals) %> 
+  <% end %>
+</template>

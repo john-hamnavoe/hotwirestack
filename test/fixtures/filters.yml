@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: filters
+#
+#  id            :bigint           not null, primary key
+#  name          :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  index_view_id :bigint           not null
+#
+# Indexes
+#
+#  index_filters_on_index_view_id  (index_view_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (index_view_id => index_views.id)
+#
+filter_document:
+  name: Document
+  index_view: index_view_document

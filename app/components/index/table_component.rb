@@ -2,15 +2,16 @@
 
 class Index::TableComponent < ApplicationComponent
   include Pagy::Frontend
-  attr_reader :frame, :items, :columns, :pagy, :query, :search_session_token
+  private attr_reader :frame, :items, :columns, :pagy, :query, :search_session_token, :index_view
 
-  def initialize(frame:, items:, columns:, pagy: nil, query: nil, search_session_token: nil)
+  def initialize(frame:, items:, index_view:, pagy: nil, query: nil, search_session_token: nil)
     @frame = frame
     @items = items
-    @columns = columns
     @pagy = pagy
     @query = query
     @search_session_token = search_session_token
+    @index_view = index_view
+    @columns = index_view.displayed_columns
   end
 
   def action_proc(model_name, attribute_name)

@@ -1,0 +1,20 @@
+<div class="col-span-full border border-gray-200 rounded-md">
+  <%= header %>     
+  <%= content_tag :div, class: "px-4 py-1", data: data do %>
+    <%= template %>
+    <%= grid_header %>
+    
+    <% if sortable? %>
+      <ul data-controller="sortable" data-sortable-id-prefix-value="<%= sortable_id_prefix %>">
+    <% end %>
+
+    <%= content %>
+    <div class="mb-3 mt-2 px-1 flex flex-inline justify-between" data-nested-form-target="links">
+      <%= add_link if add_link %>
+    </div>   
+
+    <% if sortable? %>       
+      </ul>
+    <% end %>
+  <% end %>
+</div>

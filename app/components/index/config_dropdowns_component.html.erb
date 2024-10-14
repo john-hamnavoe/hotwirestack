@@ -1,0 +1,4 @@
+<div class="flex justify-between gap-x-4">
+  <%= render Index::FilterConfigDropdownComponent.new(index_view: index_view, refresh_frame: refresh_frame, refresh_path: refresh_path, search_session_token: search_session_token) %>
+  <%= render Index::ColumnConfigDropdownComponent.new(index_view: index_view, refresh_frame: refresh_frame, refresh_path: refresh_path) %>
+</div>

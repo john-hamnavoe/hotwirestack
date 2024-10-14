@@ -4,12 +4,13 @@ class Forms::FieldComponent < ApplicationComponent
   renders_one :input, types: {
     text: ->(**args) { Forms::TextInputComponent.new(form, field, :text, **args) },
     number: ->(**args) { Forms::TextInputComponent.new(form, field, :number, **args) },
-    check_box: ->(**args) { Forms::CheckboxInputComponent.new(form, field, **args) }
+    check_box: ->(**args) { Forms::CheckboxInputComponent.new(form, field, **args) },
+    select: ->(**args) { Forms::SelectInputComponent.new(form, field, **args) }
   }
 
-  attr_reader :form, :field, :label, :help, :label_class, :span, :inline_classes
+  private attr_reader :form, :field, :label, :help, :label_class, :span, :inline_classes
 
-  def initialize(form, field, options = {})
+  def initialize(form, field, **options)
     @form = form
     @field = field
     @label = options[:label]

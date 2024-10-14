@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_09_131449) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_11_085744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,6 +19,33 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_09_131449) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "filter_conditional_groups", force: :cascade do |t|
+    t.bigint "filter_id", null: false
+    t.integer "conditional_expression"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["filter_id"], name: "index_filter_conditional_groups_on_filter_id"
+  end
+
+  create_table "filter_conditions", force: :cascade do |t|
+    t.bigint "filter_conditional_group_id", null: false
+    t.bigint "table_column_id", null: false
+    t.string "predicate"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["filter_conditional_group_id"], name: "index_filter_conditions_on_filter_conditional_group_id"
+    t.index ["table_column_id"], name: "index_filter_conditions_on_table_column_id"
+  end
+
+  create_table "filters", force: :cascade do |t|
+    t.string "name"
+    t.bigint "index_view_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["index_view_id"], name: "index_filters_on_index_view_id"
   end
 
   create_table "index_view_columns", force: :cascade do |t|
@@ -38,6 +65,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_09_131449) do
     t.boolean "default", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "active_filter_id"
+    t.index ["active_filter_id"], name: "index_index_views_on_active_filter_id"
     t.index ["table_entity_id"], name: "index_index_views_on_table_entity_id"
   end
 
@@ -93,8 +122,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_09_131449) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  add_foreign_key "filter_conditional_groups", "filters"
+  add_foreign_key "filter_conditions", "filter_conditional_groups"
+  add_foreign_key "filter_conditions", "table_columns"
+  add_foreign_key "filters", "index_views"
   add_foreign_key "index_view_columns", "index_views"
   add_foreign_key "index_view_columns", "table_columns"
+  add_foreign_key "index_views", "filters", column: "active_filter_id"
   add_foreign_key "index_views", "table_entities"
   add_foreign_key "table_columns", "table_entities"
   add_foreign_key "taggings", "tags"

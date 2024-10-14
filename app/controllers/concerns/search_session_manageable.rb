@@ -48,6 +48,7 @@ module SearchSessionManageable
 
   def set_search_session
     token, session_key = search_session_key
+    Rails.logger.info "Setting search session for #{session_key} and token #{token}"
     @search_session = Rails.cache.read(session_key) || initialize_search_session(token)
     update_search_session
     write_cache(session_key)
@@ -98,18 +99,18 @@ module SearchSessionManageable
     params[:query]
   end
 
-  def apply_search_session(base_query)
+  def apply_search_session(base_query, filter_conditions = {})
     page = search_session_params(:page)
-    query = build_query(base_query)
+    query = build_query(base_query, filter_conditions)
 
     pagy, results = pagy(query.result(distinct: true), page: page)
 
     [query, pagy, results]
   end
 
-  def build_query(base_query)
+  def build_query(base_query, filter_conditions = {})
     ransack_query_params = search_session_params(:query)
-    base_query.ransack(ransack_query_params).apply_default_sorts(search_session_sort_criteria)
+    base_query.ransack(ransack_query_params.merge(filter_conditions)).apply_default_sorts(search_session_sort_criteria)
   end
 
   def search_session_params(key)

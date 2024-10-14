@@ -2,30 +2,40 @@
 #
 # Table name: index_views
 #
-#  id              :bigint           not null, primary key
-#  default         :boolean          default(TRUE)
-#  name            :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  table_entity_id :bigint           not null
+#  id               :bigint           not null, primary key
+#  default          :boolean          default(TRUE)
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  active_filter_id :bigint
+#  table_entity_id  :bigint           not null
 #
 # Indexes
 #
-#  index_index_views_on_table_entity_id  (table_entity_id)
+#  index_index_views_on_active_filter_id  (active_filter_id)
+#  index_index_views_on_table_entity_id   (table_entity_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (active_filter_id => filters.id)
 #  fk_rails_...  (table_entity_id => table_entities.id)
 #
 class IndexView < ApplicationRecord
   belongs_to :table_entity
-
+  belongs_to :active_filter, class_name: "Filter", optional: true
+  has_many :filters, dependent: :destroy
   has_many :index_view_columns, dependent: :destroy
   has_many :displayed_index_view_columns, -> { displayed.order(:position) }, class_name: "IndexViewColumn"
   has_many :hidden_index_view_columns, -> { hidden.order(:position) }, class_name: "IndexViewColumn"
   accepts_nested_attributes_for :index_view_columns, allow_destroy: true
 
   delegate :model_class_name, to: :table_entity, prefix: true
+
+  def filter_conditions
+    return {} unless active_filter
+
+    active_filter.ransack_groupings
+  end
 
   def displayed_columns
     index_view_columns.displayed.map do |column|

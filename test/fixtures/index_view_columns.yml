@@ -20,5 +20,24 @@
 #  fk_rails_...  (index_view_id => index_views.id)
 #  fk_rails_...  (table_column_id => table_columns.id)
 #
-
-
+---
+index_view_column_title:
+  index_view: index_view_document
+  table_column: document_column_title
+  position: 1
+  display: true
+index_view_column_active:
+  index_view: index_view_document
+  table_column: document_column_active
+  position: 2
+  display: true
+index_view_column_edit:
+  index_view: index_view_document
+  table_column: document_column_edit
+  position: 3
+  display: true
+index_view_column_delete:
+  index_view: index_view_document
+  table_column: document_column_delete
+  position: 4
+  display: true

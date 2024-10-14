@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: filter_conditional_groups
+#
+#  id                     :bigint           not null, primary key
+#  conditional_expression :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  filter_id              :bigint           not null
+#
+# Indexes
+#
+#  index_filter_conditional_groups_on_filter_id  (filter_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (filter_id => filters.id)
+#
