@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
   # GET /documents or /documents.json
   def index
     @index_view = IndexView.find_by(default: true, table_entity: Document.table_entity)
-    @query, @pagy, @documents = apply_search_session(Document)
+    @query, @pagy, @documents = apply_search_session(Document, @index_view.filter_conditions)
   end
 
   # GET /documents/1 or /documents/1.json

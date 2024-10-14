@@ -1,0 +1,43 @@
+<%= turbo_frame_tag dom_id(@index_view, :filter) do %>
+  <div class="flex-none p-6 text-center flex flex-col items-center">
+    <h2 class="text-sm font-semibold leading-6 text-gray-900"><%= @filter.name %></h2>
+    <% if @index_view.active_filter_id == @filter.id %>
+      <span class="text-xs text-green-600 font-semibold"><%= t("labels.active") %></span>
+    <% else %>
+      <%= button_to index_view_active_filter_path(@index_view, filter_id: @filter.id, search_session: @search_session[:token]), method: :patch, form: {data: { turbo_frame: "_top"}}, class: "mt-2 text-base text-sky-600 flex items-center space-x-1 " do %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+          <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z" />
+        </svg>
+        <span><%= t(".set_as_active_filter") %></span>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="ml-2 flex flex-auto flex-col justify-between p-2 border-t border-gray-100">
+    <div class="flex items-center justify-between">
+      <h3 class="text-lg font-semibold mb-1"><%= t(".filter_conditions") %></h3>
+      <%= link_to t("buttons.edit"), edit_index_view_filter_path(@index_view, @filter, search_session: @search_session[:token]), class: "text-sm text-sky-600" %>
+    </div>
+    
+    <% @filter.filter_conditional_groups.each_with_index do |group, group_index| %>
+      <div class="mb-6 bg-gray-50 p-2 rounded-lg">
+        <h4 class="text-md font-medium mb-1">
+          <%= t(".group_number", number: group_index + 1) %> 
+          (<%= group.conditional_expression_title %>)
+        </h4>
+        
+        <% group.filter_conditions.each do |condition| %>
+          <div class="flex items-center space-x-2 mb-1 text-sm">
+            <span class="font-medium"><%= condition.table_column.attribute_name %></span>
+            <span class="text-gray-600"><%= condition.predicate %></span>
+            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">
+              <%= condition.value %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>  
+  <div class="ml-2 flex flex-auto flex-col justify-between p-2 border-t border-gray-100">
+    <%= render Button::DeleteComponent.new(path: index_view_filter_path(@index_view, @filter, search_session: @search_session[:token]), text: t("buttons.delete"), form: {data: { turbo_frame: "_top"}}) %>
+  </div>
+<% end %>

@@ -22,6 +22,22 @@ class Forms::TextInputComponentTest < ViewComponent::TestCase
     end
   end
 
+  def test_renders_text_input_rounded
+    # Render a form with the actual Post model
+    form_for @document, url: "#" do |form|
+      # Render the TextInputComponent within the form
+      render_inline(Forms::FieldComponent.new(form, @field)) do |field|
+        field.with_input_text(rounded: true)
+      end
+      assert_selector 'input[type="text"]', class: /\brounded-md\b/
+
+      render_inline(Forms::FieldComponent.new(form, @field)) do |field|
+        field.with_input_text(rounded: false)
+      end
+      assert_selector 'input[type="text"]', class: /\brounded-none\b/
+    end
+  end
+
   def test_renders_number_input
     # Render a form with the actual Post model
     form_for @document, url: "#" do |form|

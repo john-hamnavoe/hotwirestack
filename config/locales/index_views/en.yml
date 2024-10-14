@@ -1,0 +1,16 @@
+en:
+  index_views:
+    filters:
+      edit:
+        title: "Edit filter"
+      new:
+        title: "New filter"
+      index:
+        available_filters: "Available filters"
+        view_filter: "View filter"
+        remove_filter: "Remove filter"
+        add_filter: "Add filter"
+      show:
+        filter_conditions: "Filter conditions"
+        group_number: "Group %{number}"
+        set_as_active_filter: "Set as active filter"

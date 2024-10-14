@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Index::SearchFormComponent < ApplicationComponent
-  attr_reader :query, :frame, :search_field_predicate, :placeholder, :search_session_token
+  private attr_reader :query, :frame, :search_field_predicate, :placeholder, :search_session_token
 
-  renders_one :column_config_dropdown
+  renders_one :config_dropdowns, Index::ConfigDropdownsComponent
 
   def initialize(query:, frame:, search_field_predicate:, placeholder: "Search", search_session_token: nil)
     @query = query

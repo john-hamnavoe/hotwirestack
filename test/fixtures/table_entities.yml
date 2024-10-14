@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: table_entities
+#
+#  id               :bigint           not null, primary key
+#  model_class_name :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
 ---
 table_document:
   model_class_name: Document

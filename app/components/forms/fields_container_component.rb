@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Forms::FieldsContainerComponent < ApplicationComponent
-  attr_reader :model, :modal
+  private attr_reader :model, :modal
 
   def initialize(model: nil, modal: false)
     raise ArgumentError.new("Model is required if modal is true") if modal && model.nil?

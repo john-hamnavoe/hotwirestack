@@ -1,5 +1,30 @@
+# == Schema Information
+#
+# Table name: table_columns
+#
+#  id              :bigint           not null, primary key
+#  attribute_name  :string
+#  column_type     :integer          default("standard")
+#  header          :string
+#  method_proc     :boolean          default(FALSE)
+#  position        :integer
+#  primary         :boolean          default(FALSE)
+#  sr_only         :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  table_entity_id :bigint           not null
+#
+# Indexes
+#
+#  index_table_columns_on_table_entity_id           (table_entity_id)
+#  index_table_columns_on_table_entity_id_position  (table_entity_id,position) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (table_entity_id => table_entities.id)
+#
 ---
-column_title:
+document_column_title:
   table_entity: table_document
   attribute_name: title
   header: Title
@@ -8,7 +33,7 @@ column_title:
   primary: true
   sr_only: false
   method_proc: false
-column_active:
+document_column_active:
   table_entity: table_document
   attribute_name: active
   header: Active
@@ -17,7 +42,7 @@ column_active:
   primary: false
   sr_only: false
   method_proc: true
-column_edit:
+document_column_edit:
   table_entity: table_document
   attribute_name: edit
   header: Edit
@@ -26,7 +51,7 @@ column_edit:
   primary: false
   sr_only: true
   method_proc: false
-column_delete:
+document_column_delete:
   table_entity: table_document
   attribute_name: delete
   header: Delete

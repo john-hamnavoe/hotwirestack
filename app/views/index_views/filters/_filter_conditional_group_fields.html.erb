@@ -1,0 +1,23 @@
+<%= content_tag :div, class: "w-full float-left mb-2 nested-fields border border-brand-light rounded-md p-2", data: { new_record: form.object.new_record? } do %>
+  <div class="flex items-center justify-between text-gray-900 mb-1">
+    <div>
+      <%= t(".where") %>
+      <%= form.select :conditional_expression, conditional_expressions_for_select, {include_blank: false}, {class: "rounded-md disabled:bg-gray-200 disabled:font-medium border border-gray-300 py-1 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"} %>
+      <%= t(".following") %>
+    </div>
+    <div>
+      <small><%= link_to "Delete", "#", class: "text-red-600", data: { action: "click->nested-form#remove_association" } %></small>
+    </div>
+  </div>
+  <div id="items-panel">
+    <%= render(Forms::NestedSectionComponent.new(template_name: "NEW_CHILD_RECORD")) do |nest|  %>
+      <% nest.with_template(form, :filter_conditions, FilterCondition.new, "index_views/filters/filter_condition_fields", {table_entity_id: table_entity_id}, "NEW_CHILD_RECORD") %>
+      <% nest.with_grid_header("index_views/filters/filter_condition_header") %>
+      <% nest.with_add_link(t(".add_filter_item"))%>
+      <%= form.fields_for :filter_conditions do |filter_condition| %>
+        <%= render "index_views/filters/filter_condition_fields", form: filter_condition, table_entity_id: table_entity_id %>
+      <% end %>
+    <% end %>        
+  </div>   
+  <%= form.hidden_field :_destroy %>
+<% end %>

@@ -1,0 +1,21 @@
+<%= content_tag :div, class: "grid grid-cols-4 nested-fields", data: { new_record: form.object.new_record? } do %>
+  <div>
+    <%= render Forms::FieldComponent.new(form, :table_column_id, label_class: "sr-only") do |field| %>
+      <% field.with_input_select(options: columns_for_select(table_entity_id), html_options: {rounded: false}) %>
+    <% end %>
+  </div>
+  <div>
+    <%= render Forms::FieldComponent.new(form, :predicate, label_class: "sr-only") do |field| %>
+      <% field.with_input_select(options: predicates_for_select, html_options: {rounded: false}) %>
+    <% end %>
+  </div>
+  <div>
+    <%= render Forms::FieldComponent.new(form, :value, label_class: "sr-only") do |field| %>
+      <% field.with_input_text(rounded: false) %>
+    <% end %>
+  </div>  
+  <div>
+    <small><%= link_to "Delete", "#", class: "text-red-600", data: { action: "click->nested-form#remove_association" } %></small>
+  </div>
+  <%= form.hidden_field :_destroy %>
+<% end %>

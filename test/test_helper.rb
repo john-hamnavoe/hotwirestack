@@ -16,4 +16,5 @@ end
 
 class ViewComponent::TestCase
   include ActionView::Helpers::FormHelper  # Include FormHelper to use `form_for`
+  include ActionView::Helpers::Tags
 end

@@ -34,3 +34,14 @@ en:
   buttons:
     submit: "Save"
     cancel: "Cancel"
+    edit: "Edit"
+    delete: "Delete"
+    clear_filter: "Clear filter"
+  labels:
+    active: "Active"
+    filter: "Filter: %{name}"
+  enums:
+    filter_conditional_group:
+      conditional_expression:
+        all_and: "All"
+        any_or: "Any"
