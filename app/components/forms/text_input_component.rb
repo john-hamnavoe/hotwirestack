@@ -12,7 +12,7 @@ class Forms::TextInputComponent < Forms::BaseComponent
     @autofocus = options.fetch(:autofocus, false)
     @classes = options[:classes]
     @data = options[:data]
-    @rounded = options.fetch(:rounded, false)
+    @rounded = options.fetch(:rounded, true)
     @read_only = options.fetch(:read_only, false)
     @oninput = options[:oninput]
     @required = options.fetch(:required, false)
