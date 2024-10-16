@@ -89,7 +89,7 @@ module SearchSessionManageable
 
   def apply_search_session(base_query, index_view)
     set_search_session_index_view_id(index_view)
-    query = build_query(base_query, index_view.filter_conditions || {})
+    query = build_query(base_query, index_view&.filter_conditions || {})
     pagy, results = pagy(query.result(distinct: true), page: search_session_params(:page))
     [query, pagy, results]
   end

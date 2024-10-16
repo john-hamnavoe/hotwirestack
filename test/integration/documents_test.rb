@@ -12,6 +12,7 @@ class DocumentsTest < ActionDispatch::IntegrationTest
 
   test "index page displays documents - with correct links - caching applied" do
     assert CacheConfig.cache_enabled?, "Cache is not enabled"
+    assert_equal User.first, Current.user
     get documents_path
     assert_response :success
 
