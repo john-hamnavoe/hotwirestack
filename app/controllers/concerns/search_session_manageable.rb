@@ -95,6 +95,7 @@ module SearchSessionManageable
   end
 
   def set_search_session_index_view_id(index_view)
+    return unless index_view.present?
     if @search_session[:index_view_id] != index_view.id
       @search_session[:index_view_id] = index_view.id
       write_cache(search_session_key(@search_session[:token]))
