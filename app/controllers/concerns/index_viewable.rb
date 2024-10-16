@@ -13,11 +13,11 @@ module IndexViewable
   def set_index_views(model_class)
     @user = Current.user
     table_entity = model_class.table_entity
-    print "Current.user: #{Current.user.inspect}"
-    print "Current.user.index_views: #{Current.user.index_views.inspect}"
-    print "table_entity: #{table_entity.inspect}"
-    print "All Table Entities: #{TableEntity.all.inspect}"
-    print "#{model_class.name} Table Entity: #{table_entity.inspect}"
+    # print "Current.user: #{Current.user.inspect}"
+    # print "Current.user.index_views: #{Current.user.index_views.inspect}"
+    #  print "table_entity: #{table_entity.inspect}"
+    #  print "All Table Entities: #{TableEntity.all.inspect}"
+    #  print "#{model_class.name} Table Entity: #{table_entity.inspect}"
     @index_views = Current.user.index_views.where(table_entity: table_entity)
       .order(default: :desc, name: :asc)
   end
