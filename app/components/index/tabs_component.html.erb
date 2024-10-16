@@ -8,7 +8,7 @@
       <% bottom_border = is_active ? "-mb-0.5" : "" %>
       <%= link_to send("#{starting_path}", search_session_token: search_session_token, index_view_id: index_view.id), 
           class: "#{bottom_border} flex-shrink-0 px-4 py-2 font-medium text-gray-600 border-l border-t border-r rounded-t-md focus:outline-none #{border_color} #{bg_color}",
-          data: { turbo_action: "advance" } do %>
+          data: { turbo_action: "advance", turbo_prefetch: false} do %>
         <%= index_view.name %>
       <% end %>
     <% end %>

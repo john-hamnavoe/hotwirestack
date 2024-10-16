@@ -2,6 +2,7 @@
 
 class Index::PagyComponent < ApplicationComponent
   include Pagy::Frontend
+  include PagyHelper
   private attr_reader :id, :pagy, :index_view, :search_session_token
 
   def initialize(id:, pagy:, index_view: nil, search_session_token: nil)
