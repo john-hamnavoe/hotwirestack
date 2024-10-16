@@ -1,6 +1,7 @@
 class AboutController < ApplicationController
+  include IndexViewable
+  index_viewable Document.table_entity
+
   def index
-    @user = Current.user
-    @index_views = @user.index_views
   end
 end
