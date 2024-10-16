@@ -1,6 +1,6 @@
 class DocumentsController < ApplicationController
   include SearchSessionManageable
-  index_viewable Document.table_entity
+  index_viewable Document
   before_action :set_document, only: %i[show edit update destroy]
 
   # GET /documents or /documents.json

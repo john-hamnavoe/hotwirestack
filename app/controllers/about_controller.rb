@@ -1,6 +1,6 @@
 class AboutController < ApplicationController
   include IndexViewable
-  index_viewable Document.table_entity
+  index_viewable Document
 
   def index
   end
