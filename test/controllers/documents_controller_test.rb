@@ -2,11 +2,15 @@ require "test_helper"
 
 class DocumentsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    IndexView.create_default_views
     @document = documents(:one)
   end
 
-  test "should get index" do
+  test "index page displays documents" do
+    get documents_path
+    assert_response :success
+  end
+
+  test "index page displays documents 2" do
     get documents_path
     assert_response :success
   end
@@ -18,10 +22,10 @@ class DocumentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create document" do
     assert_difference("Document.count") do
-      post documents_path, params: {search_session: "XXXXX", document: {active: @document.active, title: @document.title}}
+      post documents_path, params: {search_session_token: "XXXXX", document: {active: @document.active, title: @document.title}}
     end
 
-    assert_redirected_to documents_path(search_session: "XXXXX")
+    assert_redirected_to documents_path(search_session_token: "XXXXX")
   end
 
   test "should show document" do
@@ -35,15 +39,15 @@ class DocumentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update document" do
-    patch document_path(@document), params: {search_session: "XXXXX", document: {active: @document.active, title: @document.title}}
-    assert_redirected_to documents_path(search_session: "XXXXX")
+    patch document_path(@document), params: {search_session_token: "XXXXX", document: {active: @document.active, title: @document.title}}
+    assert_redirected_to documents_path(search_session_token: "XXXXX")
   end
 
   test "should destroy document" do
     assert_difference("Document.count", -1) do
-      delete document_path(@document, params: {search_session: "XXXXX"})
+      delete document_path(@document, params: {search_session_token: "XXXXX"})
     end
 
-    assert_redirected_to documents_path(search_session: "XXXXX")
+    assert_redirected_to documents_path(search_session_token: "XXXXX")
   end
 end

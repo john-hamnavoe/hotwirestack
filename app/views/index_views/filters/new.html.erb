@@ -1,5 +1,5 @@
 <%= turbo_frame_tag dom_id(@index_view, :filter) do %>
   <%= render Forms::PageComponent.new(title: t(".title"), model: @filter) do %>
-    <%= render "form", index_view: @index_view, filter: @filter, search_session_token: @search_session[:token] %>
+    <%= render "form", index_view: @index_view, filter: @filter, search_session_token: search_session_token %>
   <% end %>
 <% end %>

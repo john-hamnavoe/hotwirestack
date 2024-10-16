@@ -4,7 +4,7 @@ require "test_helper"
 
 class Index::FilterConfigDropdownComponentTest < ViewComponent::TestCase
   def setup
-    @index_view = index_views(:index_view_document)
+    @index_view = index_views(:index_view_document_one_all)
   end
 
   def test_component_renders_button

@@ -14,3 +14,7 @@ en:
         filter_conditions: "Filter conditions"
         group_number: "Group %{number}"
         set_as_active_filter: "Set as active filter"
+    index:
+      title: "Index views for %{name}"
+      name: "Name"
+      new_index_view: "New index view"

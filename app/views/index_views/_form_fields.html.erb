@@ -1,0 +1,7 @@
+<%= search_session_token_hidden_field %>
+<%= render(Forms::FieldsContainerComponent.new()) do  %>
+  <%= form.hidden_field :table_entity_id, value: index_view.table_entity.id %>
+      <%= render Forms::FieldComponent.new(form, :name, span: :full) do |field| %>
+    <% field.with_input_text(autofocus: true) %>
+  <% end %>  
+<% end %>

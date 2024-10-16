@@ -43,9 +43,14 @@ export default class ReloadDropdown extends Dropdown {
   }
 
   refresh_target() {
-    console.log("doing refresh", this.refreshFrameValue, this.refreshPathValue);
-    const frame = document.querySelector(`#${this.refreshFrameValue}`);
-    frame.src = this.refreshPathValue;
+    if (this.refreshFrameValue === "#") {
+      return;
+    }
+    else {
+      console.log("doing refresh", this.refreshFrameValue, this.refreshPathValue);
+      const frame = document.querySelector(`#${this.refreshFrameValue}`);
+      frame.src = this.refreshPathValue;
+    }
   }
 
   set_background() {

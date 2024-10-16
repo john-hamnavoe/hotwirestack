@@ -36,10 +36,15 @@ en:
     cancel: "Cancel"
     edit: "Edit"
     delete: "Delete"
+    select: "Select"
     clear_filter: "Clear filter"
   labels:
     active: "Active"
     filter: "Filter: %{name}"
+    current_user: "Logged in as %{name}"
+    see_all_views: "See all views"
+  messages:
+    are_you_sure: "Are you sure?"
   enums:
     filter_conditional_group:
       conditional_expression:

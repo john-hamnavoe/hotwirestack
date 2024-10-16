@@ -20,3 +20,14 @@
 #  fk_rails_...  (filter_conditional_group_id => filter_conditional_groups.id)
 #  fk_rails_...  (table_column_id => table_columns.id)
 #
+---
+filter_condition_document_one_active_only:
+  filter_conditional_group: filter_group_document_one_active_only
+  table_column: document_column_active
+  predicate: eq
+  value: "true"
+filter_condition_document_two_active_only:
+  filter_conditional_group: filter_group_document_two_active_only
+  table_column: document_column_active
+  predicate: eq
+  value: "true"

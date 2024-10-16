@@ -16,3 +16,10 @@
 #
 #  fk_rails_...  (filter_id => filters.id)
 #
+---
+filter_group_document_one_active_only:
+  filter: filter_document_one_active_only
+  conditional_expression: 0
+filter_group_document_two_active_only:
+  filter: filter_document_two_active_only
+  conditional_expression: 0
