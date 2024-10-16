@@ -12,6 +12,7 @@ module IndexViewable
 
   def set_index_views(table_entity)
     @user = Current.user
+    print "Current.user: #{Current.user.inspect}"
     @index_views = Current.user.index_views.where(table_entity: table_entity)
       .order(default: :desc, name: :asc)
   end
