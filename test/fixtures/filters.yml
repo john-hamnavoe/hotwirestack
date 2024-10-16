@@ -16,6 +16,16 @@
 #
 #  fk_rails_...  (index_view_id => index_views.id)
 #
-filter_document:
-  name: Document
-  index_view: index_view_document
+---
+filter_document_one_all:
+  index_view: index_view_document_one_all
+  name: filter_document_one_all
+filter_document_one_active_only:
+  index_view: index_view_document_one_active_only
+  name: filter_document_one_active_only
+filter_document_two_all:
+  index_view: index_view_document_two_all
+  name: filter_document_two_all
+filter_document_two_active_only:
+  index_view: index_view_document_two_active_only
+  name: filter_document_two_active_only

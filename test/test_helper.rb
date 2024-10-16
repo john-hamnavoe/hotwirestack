@@ -11,6 +11,12 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    setup :reset_rails_cache
+    teardown :reset_rails_cache
+
+    def reset_rails_cache
+      Rails.cache.clear
+    end
   end
 end
 

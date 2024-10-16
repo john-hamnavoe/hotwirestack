@@ -10,7 +10,7 @@
     </button>
     <div data-dropdown-target="menu" class="hidden absolute right-0 top-full z-10 mt-3 w-screen max-w-4xl overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
       <div class="p-4">
-        <%= turbo_frame_tag dom_id(index_view, :filters), src: index_view_filters_path(index_view, search_session: search_session_token) do %>
+        <%= turbo_frame_tag dom_id(index_view, :filters), src: index_view_filters_path(index_view, search_session_token: search_session_token) do %>
         <% end %>       
       </div>
     </div>

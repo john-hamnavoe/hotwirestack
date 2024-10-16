@@ -1,5 +1,5 @@
 <%= form_with(model: [index_view, filter], data: {turbo_frame: "_top"}) do |form| %>
-  <%= search_session_hidden_field(search_session_token) %>
+  <%= search_session_token_hidden_field %>
   <%= render(Forms::FieldsContainerComponent.new) do  %>
     <%= render Forms::FieldComponent.new(form, :name, span: :full) do |field| %>
       <% field.with_input_text(autofocus: true) %>
@@ -15,6 +15,6 @@
       <% end %>    
     </div>
   <% end %>    
-  <% cancel_path = filter.persisted? ? index_view_filter_path(index_view, filter, search_session: search_session_token) : nil %>
+  <% cancel_path = filter.persisted? ? index_view_filter_path(index_view, filter, search_session_token: search_session_token) : nil %>
   <%= render Forms::FooterComponent.new(form, cancel_path, false)  %>
 <% end %>

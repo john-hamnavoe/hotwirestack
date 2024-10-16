@@ -12,20 +12,6 @@
 # Usage:
 # Include this module in controllers where search session management is needed.
 # The module hooks into the controller's action cycle via a before_action.
-# It is automatically included in ApplicationController.
-# To disable search session management, call `disable_search_session_management` in the controller.
-#
-# The controller must pass the search session token to the view via the `search_session` parameter on redirects etc.
-# For example:
-#   redirect_to documents_path(search_session: @search_session[:token])
-#
-# Edit and new links etc. should also pass the search session token to the server.
-# For example:
-#   <%= link_to "Edit", edit_document_path(document, search_session: @search_session[:token]) %>
-#
-# Forms can use the `search_session_hidden_field` helper to pass the search session token to the server.
-# For example:
-#   <%= search_session_hidden_field(@search_session[:token]) %>
 #
 module SearchSessionManageable
   extend ActiveSupport::Concern
@@ -34,30 +20,31 @@ module SearchSessionManageable
     before_action :set_search_session, if: :manage_search_session?
   end
 
-  class_methods do
-    def disable_search_session_management
-      @manage_search_session = false
-    end
-  end
-
   private
 
   def manage_search_session?
-    @manage_search_session != false && CacheConfig.cache_enabled?
+    CacheConfig.cache_enabled?
   end
 
   def set_search_session
-    token, session_key = search_session_key
+    token, session_key = search_session_key_with_token
     Rails.logger.info "Setting search session for #{session_key} and token #{token}"
     @search_session = Rails.cache.read(session_key) || initialize_search_session(token)
     update_search_session
     write_cache(session_key)
   end
 
-  def search_session_key
-    token = params[:search_session] || SecureRandom.urlsafe_base64(16)
-    controller_name = self.class.name.underscore.gsub("_controller", "")
-    [token, "search_session_#{controller_name}_#{token}"]
+  def search_session_key_with_token
+    token = params[:search_session_token] ||= SecureRandom.urlsafe_base64(16)
+    [token, search_session_key(token)]
+  end
+
+  def controller_key_name
+    @controller_key_name ||= self.class.name.underscore.delete_suffix("_controller")
+  end
+
+  def search_session_key(token)
+    "search_session_#{controller_key_name}_#{token}"
   end
 
   def write_cache(key)
@@ -69,7 +56,8 @@ module SearchSessionManageable
       token: token,
       query: sanitized_query_params,
       sort: query_sort_params,
-      page: params[:page]
+      page: params[:page],
+      index_view_id: params[:index_view_id]
     }
   end
 
@@ -99,13 +87,18 @@ module SearchSessionManageable
     params[:query]
   end
 
-  def apply_search_session(base_query, filter_conditions = {})
-    page = search_session_params(:page)
-    query = build_query(base_query, filter_conditions)
-
-    pagy, results = pagy(query.result(distinct: true), page: page)
-
+  def apply_search_session(base_query, index_view)
+    set_search_session_index_view_id(index_view)
+    query = build_query(base_query, index_view.filter_conditions || {})
+    pagy, results = pagy(query.result(distinct: true), page: search_session_params(:page))
     [query, pagy, results]
+  end
+
+  def set_search_session_index_view_id(index_view)
+    if @search_session[:index_view_id] != index_view.id
+      @search_session[:index_view_id] = index_view.id
+      write_cache(search_session_key(@search_session[:token]))
+    end
   end
 
   def build_query(base_query, filter_conditions = {})

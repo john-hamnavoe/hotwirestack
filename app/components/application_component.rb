@@ -4,5 +4,4 @@ class ApplicationComponent < ViewComponent::Base
   include Turbo::StreamsHelper
   include Ransack::Helpers::FormHelper
   include CacheConfig
-  include SessionHelper
 end

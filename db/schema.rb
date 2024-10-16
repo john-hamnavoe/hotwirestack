@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_11_085744) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_14_124434) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,8 +66,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_11_085744) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "active_filter_id"
+    t.bigint "user_id", null: false
     t.index ["active_filter_id"], name: "index_index_views_on_active_filter_id"
     t.index ["table_entity_id"], name: "index_index_views_on_table_entity_id"
+    t.index ["user_id"], name: "index_index_views_on_user_id"
   end
 
   create_table "table_columns", force: :cascade do |t|
@@ -122,6 +124,14 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_11_085744) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.boolean "logged_in", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "filter_conditional_groups", "filters"
   add_foreign_key "filter_conditions", "filter_conditional_groups"
   add_foreign_key "filter_conditions", "table_columns"
@@ -130,6 +140,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_11_085744) do
   add_foreign_key "index_view_columns", "table_columns"
   add_foreign_key "index_views", "filters", column: "active_filter_id"
   add_foreign_key "index_views", "table_entities"
+  add_foreign_key "index_views", "users"
   add_foreign_key "table_columns", "table_entities"
   add_foreign_key "taggings", "tags"
 end

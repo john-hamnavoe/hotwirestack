@@ -16,3 +16,12 @@ one:
 two:
   title: Document Two
   active: true
+
+three:
+  title: Document Three
+  active: true
+
+four:
+  title: Document Four
+  active: true
+

@@ -9,19 +9,24 @@
 #  updated_at       :datetime         not null
 #  active_filter_id :bigint
 #  table_entity_id  :bigint           not null
+#  user_id          :bigint           not null
 #
 # Indexes
 #
 #  index_index_views_on_active_filter_id  (active_filter_id)
 #  index_index_views_on_table_entity_id   (table_entity_id)
+#  index_index_views_on_user_id           (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (active_filter_id => filters.id)
 #  fk_rails_...  (table_entity_id => table_entities.id)
+#  fk_rails_...  (user_id => users.id)
 #
 class IndexView < ApplicationRecord
   belongs_to :table_entity
+  belongs_to :user
+  before_destroy :clear_active_filter # must be defined before belongs_to :active_filter
   belongs_to :active_filter, class_name: "Filter", optional: true
   has_many :filters, dependent: :destroy
   has_many :index_view_columns, dependent: :destroy
@@ -31,6 +36,11 @@ class IndexView < ApplicationRecord
 
   delegate :model_class_name, to: :table_entity, prefix: true
 
+  validates :name, presence: true
+  before_destroy :prevent_destroy_if_default, prepend: true
+
+  after_create_commit :create_default_columns
+
   def filter_conditions
     return {} unless active_filter
 
@@ -38,17 +48,7 @@ class IndexView < ApplicationRecord
   end
 
   def displayed_columns
-    index_view_columns.displayed.map do |column|
-      {
-        model_class_name: table_entity_model_class_name,
-        header: column.table_column_header,
-        attribute_name: column.table_column_attribute_name.to_sym,
-        type: column.table_column_column_type.to_sym,
-        primary: column.table_column_primary,
-        sr_only: column.table_column_sr_only,
-        method: column.table_column_method_proc
-      }
-    end
+    index_view_columns.displayed.map(&:to_column_hash)
   end
 
   def create_default_columns
@@ -60,10 +60,29 @@ class IndexView < ApplicationRecord
     end
   end
 
+  private
+
+  def prevent_destroy_if_default
+    if default?
+      errors.add(:base, "Cannot delete a default record.")
+      throw(:abort)
+    end
+  end
+
+  def clear_active_filter
+    update(active_filter: nil)
+  end
+
   class << self
     def create_default_views
+      User.all.each do |user|
+        create_default_views_for_user(user)
+      end
+    end
+
+    def create_default_views_for_user(user)
       TableEntity.all.each do |table_entity|
-        index_view = find_or_create_by(default: true, table_entity: table_entity) do |index_view|
+        index_view = find_or_create_by(default: true, table_entity: table_entity, user: user) do |index_view|
           index_view.name = "Default view for #{table_entity.model_class_name.downcase.pluralize}"
         end
 

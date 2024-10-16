@@ -17,9 +17,9 @@ class Index::TableComponent < ApplicationComponent
   def action_proc(model_name, attribute_name)
     case attribute_name
     when :edit
-      ->(record) { link_to "Edit", send(:"edit_#{model_name.downcase}_path", record, search_session: search_session_token), class: "text-indigo-600 hover:text-indigo-900", data: {turbo_frame: :_top} }
+      ->(record) { link_to "Edit", send(:"edit_#{model_name.downcase}_path", record, search_session_token: search_session_token), class: "text-indigo-600 hover:text-indigo-900", data: {turbo_frame: :_top} }
     when :delete
-      ->(record) { button_to "Delete", send(:"#{model_name.downcase}_path", record, search_session: search_session_token), method: :delete, class: "text-red-600 hover:text-red-900", form: {data: {turbo_confirm: "Are you sure?"}} }
+      ->(record) { button_to "Delete", send(:"#{model_name.downcase}_path", record, search_session_token: search_session_token), method: :delete, class: "text-red-600 hover:text-red-900", form: {data: {turbo_confirm: "Are you sure?"}} }
     end
   end
 

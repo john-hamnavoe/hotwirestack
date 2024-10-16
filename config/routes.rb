@@ -22,6 +22,8 @@
 #                                          DELETE /index_views/:index_view_id/filters/:id(.:format)                                                 index_views/filters#destroy
 #                 index_view_active_filter PATCH  /index_views/:index_view_id/active_filter(.:format)                                               index_views/active_filter#update
 #                                          PUT    /index_views/:index_view_id/active_filter(.:format)                                               index_views/active_filter#update
+#                              index_views POST   /index_views(.:format)                                                                            index_views#create
+#                           new_index_view GET    /index_views/new(.:format)                                                                        index_views#new
 #                               index_view GET    /index_views/:id(.:format)                                                                        index_views#show
 #               index_view_column_position PATCH  /index_view_columns/:index_view_column_id/position(.:format)                                      index_view_columns/position#update
 #                                          PUT    /index_view_columns/:index_view_column_id/position(.:format)                                      index_view_columns/position#update
@@ -58,7 +60,7 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :documents
-  resources :index_views, only: [:show] do
+  resources :index_views do
     resources :filters, only: [:index, :show, :new, :create, :edit, :update, :destroy], controller: "index_views/filters"
     resource :active_filter, only: [:update], controller: "index_views/active_filter"
   end

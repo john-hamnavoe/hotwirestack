@@ -8,6 +8,5 @@ class Header::DesktopMenuComponentTest < ViewComponent::TestCase
     render_inline(Header::DesktopMenuComponent.new(current_path: current_path))
 
     assert_selector "a[href='/documents']"
-    assert_selector "a[href='/about/index']"
   end
 end

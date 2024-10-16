@@ -1,0 +1,36 @@
+<div class="flex justify-between items-center mb-2  border-b-2 border-gray-200">
+  <!-- Tab as -->
+  <div class="flex w-auto max-w-full">
+    <% index_views.each do |index_view| %>
+      <% is_active = index_view.id == selected_index_view.id %>
+      <% border_color = is_active ? "border-blue-600" : "border-gray-200" %>
+      <% bg_color = is_active ? "bg-white" : "bg-gray-50" %>
+      <% bottom_border = is_active ? "-mb-0.5" : "" %>
+      <%= link_to send("#{starting_path}", search_session_token: search_session_token, index_view_id: index_view.id), 
+          class: "#{bottom_border} flex-shrink-0 px-4 py-2 font-medium text-gray-600 border-l border-t border-r rounded-t-md focus:outline-none #{border_color} #{bg_color}",
+          data: { turbo_action: "advance" } do %>
+        <%= index_view.name %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Add View and See All Views Links -->
+  <div class="flex items-center space-x-4 ml-4 flex-grow min-w-0 flex-shrink-0">
+    <div class="relative" data-controller="reload-dropdown" 
+      data-reload-dropdown-frame-value="<%= dom_id(selected_index_view.table_entity, :new) %>" 
+      data-reload-dropdown-refresh-path-value="<%= "#" %>"
+      data-reload-dropdown-refresh-frame-value="<%= "#" %>"
+      data-action="click@window->reload-dropdown#hide touchstart@window->reload-dropdown#hide keydown.up->reload-dropdown#previousItem keydown.down->reload-dropdown#nextItem keydown.esc->reload-dropdown#hide">
+      <button data-reload-dropdown-target="button" data-action="reload-dropdown#toggle:stop" type="button" class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 rounded-md py-1 px-1" aria-expanded="false">
+        <span>+ Add view</span>
+      </button>
+      <div data-reload-dropdown-target="menu" class="hidden absolute left-0 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 ">
+        <div class="p-4">
+          <%= turbo_frame_tag dom_id(selected_index_view.table_entity, :new), src: new_index_view_path(table_entity_id: selected_index_view.table_entity.id, search_session_token: search_session_token) do %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <%= render Button::LinkComponent.new(path: index_views_path(table_entity_id: selected_index_view.table_entity.id, search_session_token: search_session_token), text: t("labels.see_all_views")) %>
+  </div>
+</div>

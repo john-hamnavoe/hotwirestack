@@ -9,19 +9,38 @@
 #  updated_at       :datetime         not null
 #  active_filter_id :bigint
 #  table_entity_id  :bigint           not null
+#  user_id          :bigint           not null
 #
 # Indexes
 #
 #  index_index_views_on_active_filter_id  (active_filter_id)
 #  index_index_views_on_table_entity_id   (table_entity_id)
+#  index_index_views_on_user_id           (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (active_filter_id => filters.id)
 #  fk_rails_...  (table_entity_id => table_entities.id)
+#  fk_rails_...  (user_id => users.id)
 #
 ---
-index_view_document:
+index_view_document_one_all:
   table_entity: table_document
-  name: index_view_document
+  name: All
   default: true
+  user: one
+index_view_document_one_active_only:
+  table_entity: table_document
+  name: Active Only
+  default: false
+  user: one
+index_view_document_two_all:
+  table_entity: table_document
+  name: All
+  default: true
+  user: two
+index_view_document_two_active_only:
+  table_entity: table_document
+  name: Active Only
+  default: false
+  user: two

@@ -1,5 +1,5 @@
 
 
 <%= render Forms::PageComponent.new(title: t(".title"), model: @document) do %>
-  <%= render "form", document: @document, search_session_token: @search_session[:token] %>
+  <%= render "form", document: @document, search_session_token: search_session_token %>
 <% end %>

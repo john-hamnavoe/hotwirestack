@@ -18,7 +18,7 @@
 
 
           <span class="ml-3 flex-auto truncate"><%= filter.name %></span>
-          <%= link_to index_view_filter_path(@index_view, filter, search_session: @search_session[:token]), data: { turbo_frame: dom_id(@index_view, :filter) } do %>
+          <%= link_to with_search_session_token(index_view_filter_path(@index_view, filter)), data: { turbo_frame: dom_id(@index_view, :filter) } do %>
             <% text = @index_view.active_filter_id == filter.id ? "text-gray-600" : "text-gray-400" %>
             <span class="sr-only"><%= t(".view_filter") %></span>
             <svg class="ml-3  h-5 w-5 flex-non <%= text %>" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -29,10 +29,10 @@
         <% end %>
       </ul>
       <% if @index_view.active_filter_id.present? %>
-        <%= render Index::ClearFilterButtonComponent.new(index_view: @index_view, search_session: @search_session[:token]) %>
+        <%= render Index::ClearFilterButtonComponent.new(index_view: @index_view, search_session_token: search_session_token) %>
       <% end %>
       <div class="mt-6 px-4">
-        <%= render Button::ActionComponent.new(path: new_index_view_filter_path(@index_view, search_session: @search_session[:token]), text: t(".add_filter"), data: { turbo_frame: dom_id(@index_view, :filter) }) %>
+        <%= render Button::ActionComponent.new(path: with_search_session_token(new_index_view_filter_path(@index_view)), text: t(".add_filter"), data: { turbo_frame: dom_id(@index_view, :filter) }) %>
       </div>
     </div>
 

@@ -31,4 +31,16 @@ class IndexViewColumn < ApplicationRecord
 
   scope :displayed, -> { includes(:table_column).where(display: true).order(:position) }
   scope :hidden, -> { includes(:table_column).where(display: false).order(:position) }
+
+  def to_column_hash
+    {
+      model_class_name: model_class_name,
+      header: table_column_header,
+      attribute_name: table_column_attribute_name.to_sym,
+      type: table_column_column_type.to_sym,
+      primary: table_column_primary,
+      sr_only: table_column_sr_only,
+      method: table_column_method_proc
+    }
+  end
 end

@@ -2,7 +2,6 @@ require "application_system_test_case"
 
 class DocumentsTest < ApplicationSystemTestCase
   setup do
-    IndexView.create_default_views
     @document = documents(:one)
   end
 
