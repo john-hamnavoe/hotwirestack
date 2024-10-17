@@ -13,105 +13,130 @@
 # Include this module in controllers where search session management is needed.
 # The module hooks into the controller's action cycle via a before_action.
 #
+
+# Workflow:
+# Initialize search session token:
+#   Check if the params contain a search session token. If not, generate a new one.
+#
+# Fetch or initialize search session:
+#   Retrieve the search session using the token from the cache. If no session is found, create a new one.
+#
+# Handle index view change (if applicable):
+#   If the user switches tabs i.e. changes the index view in the search UI:
+#       Retrieve the cached view and update the session with its stored values.
+#       If no cached view is found, clear the query, sort, and page in the session as this is new search for new index view
+#
+# Update or initialize search session (if index view remains the same):
+#   If the session is new, initialize query, sort, and page with default values.
+#   If the session already exists, update it with sanitized values for query, sort, and page, ignoring any nil parameters.
+# Apply search session:
+#  Call apply_search_session with the base query and index view. By this point, the session should either contain cached values or updated parameters from the user.
+
 module SearchSessionManageable
   extend ActiveSupport::Concern
+  include RansackPagyParams
 
   included do
-    before_action :set_search_session, if: :manage_search_session?
+    before_action :set_search_session, if: -> { CacheConfig.cache_enabled? }
   end
 
   private
 
-  def manage_search_session?
-    CacheConfig.cache_enabled?
-  end
-
   def set_search_session
-    token, session_key = search_session_key_with_token
-    Rails.logger.info "Setting search session for #{session_key} and token #{token}"
-    @search_session = Rails.cache.read(session_key) || initialize_search_session(token)
-    update_search_session
-    write_cache(session_key)
+    initialize_search_session_token
+    @search_session = fetch_or_initialize_search_session
+
+    if changed_index_view?
+      handle_changed_index_view
+    else
+      update_or_initialize_search_session
+    end
   end
 
-  def search_session_key_with_token
-    token = params[:search_session_token] ||= SecureRandom.urlsafe_base64(16)
-    [token, search_session_key(token)]
+  def initialize_search_session_token
+    params[:search_session_token] ||= SecureRandom.urlsafe_base64(16)
+  end
+
+  def fetch_or_initialize_search_session
+    SearchSessionCache.read(controller_key_name, params[:search_session_token])
+  end
+
+  def handle_changed_index_view
+    cached_view = fetch_cached_index_view
+    update_session_with_cached_view(cached_view)
+  end
+
+  def fetch_cached_index_view
+    SearchSessionIndexCache.read(index_view_key_name(index_view_id_params), @search_session.token)
+  end
+
+  def update_session_with_cached_view(cached_view)
+    if cached_view.found?
+      @search_session.update(cached_view.query_attributes.merge(index_view_id: index_view_id_params))
+    else
+      @search_session.update(query: {}, sort: nil, page: nil, index_view_id: index_view_id_params)
+    end
+  end
+
+  def update_or_initialize_search_session
+    @search_session.found? ? update_existing_session : initialize_new_session
+  end
+
+  def update_existing_session
+    updates = collect_session_updates
+    @search_session.update(updates) if updates.any?
+  end
+
+  def collect_session_updates
+    {
+      query: sanitized_query_params,
+      page: page_params,
+      sort: query_sort_params
+    }.compact_blank
+  end
+
+  def initialize_new_session
+    @search_session.update(
+      query: sanitized_query_params,
+      sort: query_sort_params,
+      page: params[:page],
+      index_view_id: params[:index_view_id]
+    )
   end
 
   def controller_key_name
     @controller_key_name ||= self.class.name.underscore.delete_suffix("_controller")
   end
 
-  def search_session_key(token)
-    "search_session_#{controller_key_name}_#{token}"
+  def index_view_key_name(index_view_id)
+    "#{index_view_id}_#{controller_key_name}"
   end
 
-  def write_cache(key)
-    Rails.cache.write(key, @search_session, expires_in: 1.hour)
-  end
-
-  def initialize_search_session(token)
-    {
-      token: token,
-      query: sanitized_query_params,
-      sort: query_sort_params,
-      page: params[:page],
-      index_view_id: params[:index_view_id]
-    }
-  end
-
-  def update_search_session
-    @search_session[:query] = sanitized_query_params if sanitized_query_params.present?
-    @search_session[:page] = page_params if page_params.present?
-    @search_session[:sort] = query_sort_params if query_sort_params.present?
-  end
-
-  def sanitized_query_params
-    if query_params.is_a?(ActionController::Parameters)
-      query_params.except(:s).permit!.to_h  # Ensure it's a permitted hash
-    else
-      {}
-    end
-  end
-
-  def page_params
-    params[:page]
-  end
-
-  def query_sort_params
-    params[:query]&.dig(:s)
-  end
-
-  def query_params
-    params[:query]
+  def changed_index_view?
+    index_view_id_params.present? && index_view_id_params != @search_session.index_view_id
   end
 
   def apply_search_session(base_query, index_view)
     set_search_session_index_view_id(index_view)
-    query = build_query(base_query, index_view&.filter_conditions || {})
-    pagy, results = pagy(query.result(distinct: true), page: search_session_params(:page))
+    query = SearchQueryBuilder.new(base_query, @search_session, index_view, params).build
+    pagy, results = pagy(query.result(distinct: true), page: search_session_page)
     [query, pagy, results]
   end
 
   def set_search_session_index_view_id(index_view)
     return unless index_view.present?
-    if @search_session[:index_view_id] != index_view.id
-      @search_session[:index_view_id] = index_view.id
-      write_cache(search_session_key(@search_session[:token]))
+    new_index_view_id = index_view.id
+    if @search_session.index_view_id != new_index_view_id
+      @search_session.update(index_view_id: new_index_view_id.to_s)
     end
+    cache_current_index_view(index_view)
   end
 
-  def build_query(base_query, filter_conditions = {})
-    ransack_query_params = search_session_params(:query)
-    base_query.ransack(ransack_query_params.merge(filter_conditions)).apply_default_sorts(search_session_sort_criteria)
+  def cache_current_index_view(index_view)
+    SearchSessionIndexCache.write(index_view_key_name(index_view.id), @search_session.token, @search_session.query_attributes)
   end
 
-  def search_session_params(key)
-    CacheConfig.cache_enabled? ? @search_session[key] : params[key]
-  end
-
-  def search_session_sort_criteria
-    CacheConfig.cache_enabled? ? @search_session&.dig(:sort) : query_sort_params
+  def search_session_page
+    CacheConfig.cache_enabled? ? @search_session.page : params[:page]
   end
 end

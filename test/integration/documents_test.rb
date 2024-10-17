@@ -13,7 +13,7 @@ class DocumentsTest < ActionDispatch::IntegrationTest
   test "index page displays documents - with correct links - caching applied" do
     assert CacheConfig.cache_enabled?, "Cache is not enabled"
 
-    get documents_path(index_view_id: @default_index_view.id)
+    get documents_path
     index_views = assigns(:index_views)
     assert_equal 2, index_views.count
     assert_equal User.where(logged_in: true).first, assigns(:user)
@@ -21,7 +21,7 @@ class DocumentsTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     documents = assigns(:documents)
-    search_session_token = assigns(:search_session)[:token]
+    search_session_token = assigns(:search_session).token
     assert_equal 4, documents.count
     assert_not_nil search_session_token
 
@@ -161,7 +161,7 @@ class DocumentsTest < ActionDispatch::IntegrationTest
     get documents_path
     assert_response :success
     documents = assigns(:documents)
-    search_session_token = assigns(:search_session)[:token]
+    search_session_token = assigns(:search_session).token
     assert_equal 4, documents.count
 
     get new_index_view_path(table_entity_id: @table_entity.id, search_session_token: search_session_token)
@@ -227,6 +227,44 @@ class DocumentsTest < ActionDispatch::IntegrationTest
     documents = assigns(:documents)
     assert_equal 4, documents.count, "back to default index view"
     search_session = assigns(:search_session)
-    assert_equal @default_index_view.id, search_session[:index_view_id]
+    assert_equal @default_index_view.id.to_s, search_session.index_view_id
+  end
+
+  test "changing index_views and searcha and sort persisetance via search session" do
+    @active_only_index_view.update(active_filter_id: @filter.id)
+    get documents_path
+    assert_response :success
+    documents = assigns(:documents)
+    search_session_token = assigns(:search_session).token
+    assert_equal 4, documents.count
+
+    get documents_path(search_session_token: search_session_token, query: {title_cont: "One", s: "title asc"})
+    assert_response :success
+    documents = assigns(:documents)
+    assert_equal 1, documents.count
+
+    get documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
+    assert_response :success
+    documents = assigns(:documents)
+    assert_equal 3, documents.count
+    search_session = assigns(:search_session)
+    assert_nil search_session.sort
+    assert_equal({}, search_session.query.to_h)
+
+    get documents_path(search_session_token: search_session_token, query: {title_cont: "Three"})
+    assert_response :success
+    documents = assigns(:documents)
+    assert_equal 1, documents.count
+    search_session = assigns(:search_session)
+    assert_nil search_session.sort
+    assert_equal({"title_cont" => "Three"}, search_session.query.to_h)
+
+    get documents_path(index_view_id: @default_index_view.id, search_session_token: search_session_token)
+    assert_response :success
+    documents = assigns(:documents)
+    assert_equal 1, documents.count
+    search_session = assigns(:search_session)
+    assert_equal({"title_cont" => "One"}, search_session.query.to_h)
+    assert_equal("title asc", search_session.sort)
   end
 end
