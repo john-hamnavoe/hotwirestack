@@ -27,7 +27,7 @@ module IndexViewable
   end
 
   def load_index_view
-    index_view_id = params[:index_view_id] || @search_session&.dig(:index_view_id)
+    index_view_id = params[:index_view_id] || @search_session&.index_view_id
     if index_view_id.present?
       index_view = @index_views.find_by(id: index_view_id)
       return index_view if index_view.present?
