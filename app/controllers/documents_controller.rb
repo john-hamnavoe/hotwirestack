@@ -25,27 +25,17 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(document_params)
 
-    if @document.save
-      redirect_to with_search_session_token(documents_path), notice: "Document was successfully created."
-    else
-      render :new, status: :unprocessable_entity
-    end
+    handle_create(@document, document_params, documents_path)
   end
 
   # PATCH/PUT /documents/1 or /documents/1.json
   def update
-    if @document.update(document_params)
-      redirect_to with_search_session_token(documents_path), notice: "Document was successfully updated."
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    handle_update(@document, document_params, documents_path)
   end
 
   # DELETE /documents/1 or /documents/1.json
   def destroy
-    @document.destroy!
-
-    redirect_to with_search_session_token(documents_path), status: :see_other, notice: "Document was successfully destroyed."
+    handle_destroy(@document, documents_path)
   end
 
   # Use callbacks to share common setup or constraints between actions.

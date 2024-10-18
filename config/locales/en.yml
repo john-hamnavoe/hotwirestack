@@ -38,6 +38,7 @@ en:
     delete: "Delete"
     select: "Select"
     clear_filter: "Clear filter"
+    open: "Open"
   labels:
     active: "Active"
     filter: "Filter: %{name}"
@@ -45,6 +46,9 @@ en:
     see_all_views: "See all views"
   messages:
     are_you_sure: "Are you sure?"
+    created: "%{record_name} was successfully created."
+    updated: "%{record_name} was successfully updated."
+    destroyed: "%{record_name} was successfully destroyed."
   enums:
     filter_conditional_group:
       conditional_expression:

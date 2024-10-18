@@ -1,4 +1,5 @@
 <%= turbo_frame_tag frame do %>
+  <%= render "shared/flash" %>
   <div class="mt-2 flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -6,7 +7,11 @@
           <% columns.each do |column| %>
             <% table.with_header(nil, sr_only: column[:sr_only]) do %>
               <div class="flex justify-between">
-              <%= sort_link(query, column[:attribute_name], column[:header], data: {turbo_prefetch: false}) %>
+              <% if column[:type] == :action %>
+                <%= column[:attribute_name] %>
+              <% else %>
+                <%= sort_link(query, column[:attribute_name], column[:header], data: {turbo_prefetch: false}) %>
+              <% end %>
               </div>
             <% end %>
           <% end %>

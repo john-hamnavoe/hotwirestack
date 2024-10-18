@@ -1,0 +1,11 @@
+en:
+  boards:
+    index:
+      title: "Boards"
+      new_board: "New board"
+      search_placeholder: "Search boards"
+    edit:
+      title: "Edit board"
+    new:
+      title: "New board"
+  

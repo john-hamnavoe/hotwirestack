@@ -29,3 +29,15 @@ filter_document_two_all:
 filter_document_two_active_only:
   index_view: index_view_document_two_active_only
   name: filter_document_two_active_only
+filter_board_one_all:
+  index_view: index_view_board_one_all
+  name: filter_board_one_all
+filter_board_one_active_only:
+  index_view: index_view_board_one_active_only
+  name: filter_board_one_active_only
+filter_board_two_all:
+  index_view: index_view_board_two_all
+  name: filter_board_two_all
+filter_board_two_active_only:
+  index_view: index_view_board_two_active_only
+  name: filter_board_two_active_only

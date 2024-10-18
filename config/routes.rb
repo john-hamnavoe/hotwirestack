@@ -12,6 +12,14 @@
 #                                          PATCH  /documents/:id(.:format)                                                                          documents#update
 #                                          PUT    /documents/:id(.:format)                                                                          documents#update
 #                                          DELETE /documents/:id(.:format)                                                                          documents#destroy
+#                                   boards GET    /boards(.:format)                                                                                 boards#index
+#                                          POST   /boards(.:format)                                                                                 boards#create
+#                                new_board GET    /boards/new(.:format)                                                                             boards#new
+#                               edit_board GET    /boards/:id/edit(.:format)                                                                        boards#edit
+#                                    board GET    /boards/:id(.:format)                                                                             boards#show
+#                                          PATCH  /boards/:id(.:format)                                                                             boards#update
+#                                          PUT    /boards/:id(.:format)                                                                             boards#update
+#                                          DELETE /boards/:id(.:format)                                                                             boards#destroy
 #                       index_view_filters GET    /index_views/:index_view_id/filters(.:format)                                                     index_views/filters#index
 #                                          POST   /index_views/:index_view_id/filters(.:format)                                                     index_views/filters#create
 #                    new_index_view_filter GET    /index_views/:index_view_id/filters/new(.:format)                                                 index_views/filters#new
@@ -22,9 +30,14 @@
 #                                          DELETE /index_views/:index_view_id/filters/:id(.:format)                                                 index_views/filters#destroy
 #                 index_view_active_filter PATCH  /index_views/:index_view_id/active_filter(.:format)                                               index_views/active_filter#update
 #                                          PUT    /index_views/:index_view_id/active_filter(.:format)                                               index_views/active_filter#update
-#                              index_views POST   /index_views(.:format)                                                                            index_views#create
+#                              index_views GET    /index_views(.:format)                                                                            index_views#index
+#                                          POST   /index_views(.:format)                                                                            index_views#create
 #                           new_index_view GET    /index_views/new(.:format)                                                                        index_views#new
+#                          edit_index_view GET    /index_views/:id/edit(.:format)                                                                   index_views#edit
 #                               index_view GET    /index_views/:id(.:format)                                                                        index_views#show
+#                                          PATCH  /index_views/:id(.:format)                                                                        index_views#update
+#                                          PUT    /index_views/:id(.:format)                                                                        index_views#update
+#                                          DELETE /index_views/:id(.:format)                                                                        index_views#destroy
 #               index_view_column_position PATCH  /index_view_columns/:index_view_column_id/position(.:format)                                      index_view_columns/position#update
 #                                          PUT    /index_view_columns/:index_view_column_id/position(.:format)                                      index_view_columns/position#update
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
@@ -60,6 +73,8 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :documents
+  resources :boards
+
   resources :index_views do
     resources :filters, only: [:index, :show, :new, :create, :edit, :update, :destroy], controller: "index_views/filters"
     resource :active_filter, only: [:update], controller: "index_views/active_filter"

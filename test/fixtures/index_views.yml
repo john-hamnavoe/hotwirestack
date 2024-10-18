@@ -44,3 +44,23 @@ index_view_document_two_active_only:
   name: Active Only
   default: false
   user: two
+index_view_board_one_all:
+  table_entity: table_board
+  name: All
+  default: true
+  user: one
+index_view_board_one_active_only:
+  table_entity: table_board
+  name: Active Only
+  default: false
+  user: one
+index_view_board_two_all:
+  table_entity: table_board
+  name: All
+  default: true
+  user: two
+index_view_board_two_active_only:
+  table_entity: table_board
+  name: Active Only
+  default: false
+  user: two

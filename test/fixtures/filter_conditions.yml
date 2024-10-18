@@ -25,9 +25,19 @@ filter_condition_document_one_active_only:
   filter_conditional_group: filter_group_document_one_active_only
   table_column: document_column_active
   predicate: eq
-  value: "true"
+  value: 'true'
 filter_condition_document_two_active_only:
   filter_conditional_group: filter_group_document_two_active_only
   table_column: document_column_active
   predicate: eq
-  value: "true"
+  value: 'true'
+filter_condition_board_one_active_only:
+  filter_conditional_group: filter_group_board_one_active_only
+  table_column: board_column_active
+  predicate: eq
+  value: 'true'
+filter_condition_board_two_active_only:
+  filter_conditional_group: filter_group_board_two_active_only
+  table_column: board_column_active
+  predicate: eq
+  value: 'true'

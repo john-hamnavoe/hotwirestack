@@ -10,3 +10,5 @@
 ---
 table_document:
   model_class_name: Document
+table_board:
+  model_class_name: Board

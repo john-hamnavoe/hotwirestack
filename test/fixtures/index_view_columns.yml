@@ -21,83 +21,203 @@
 #  fk_rails_...  (table_column_id => table_columns.id)
 #
 ---
-index_view_column_title_one_all:
+index_view_column_document_title_one_all:
   index_view: index_view_document_one_all
   table_column: document_column_title
   position: 1
   display: true
-index_view_column_title_one_active_only:
+index_view_column_document_title_one_active_only:
   index_view: index_view_document_one_active_only
   table_column: document_column_title
   position: 1
   display: true
-index_view_column_title_two_all:
+index_view_column_document_title_two_all:
   index_view: index_view_document_two_all
   table_column: document_column_title
   position: 1
   display: true
-index_view_column_title_two_active_only:
+index_view_column_document_title_two_active_only:
   index_view: index_view_document_two_active_only
   table_column: document_column_title
   position: 1
   display: true
-index_view_column_active_one_all:
+index_view_column_document_active_one_all:
   index_view: index_view_document_one_all
   table_column: document_column_active
   position: 2
   display: true
-index_view_column_active_one_active_only:
+index_view_column_document_active_one_active_only:
   index_view: index_view_document_one_active_only
   table_column: document_column_active
   position: 2
   display: true
-index_view_column_active_two_all:
+index_view_column_document_active_two_all:
   index_view: index_view_document_two_all
   table_column: document_column_active
   position: 2
   display: true
-index_view_column_active_two_active_only:
+index_view_column_document_active_two_active_only:
   index_view: index_view_document_two_active_only
   table_column: document_column_active
   position: 2
   display: true
-index_view_column_edit_one_all:
+index_view_column_document_edit_one_all:
   index_view: index_view_document_one_all
   table_column: document_column_edit
   position: 3
   display: true
-index_view_column_edit_one_active_only:
+index_view_column_document_edit_one_active_only:
   index_view: index_view_document_one_active_only
   table_column: document_column_edit
   position: 3
   display: true
-index_view_column_edit_two_all:
+index_view_column_document_edit_two_all:
   index_view: index_view_document_two_all
   table_column: document_column_edit
   position: 3
   display: true
-index_view_column_edit_two_active_only:
+index_view_column_document_edit_two_active_only:
   index_view: index_view_document_two_active_only
   table_column: document_column_edit
   position: 3
   display: true
-index_view_column_delete_one_all:
+index_view_column_document_delete_one_all:
   index_view: index_view_document_one_all
   table_column: document_column_delete
   position: 4
   display: true
-index_view_column_delete_one_active_only:
+index_view_column_document_delete_one_active_only:
   index_view: index_view_document_one_active_only
   table_column: document_column_delete
   position: 4
   display: true
-index_view_column_delete_two_all:
+index_view_column_document_delete_two_all:
   index_view: index_view_document_two_all
   table_column: document_column_delete
   position: 4
   display: true
-index_view_column_delete_two_active_only:
+index_view_column_document_delete_two_active_only:
   index_view: index_view_document_two_active_only
   table_column: document_column_delete
   position: 4
+  display: true
+index_view_column_board_name_one_all:
+  index_view: index_view_board_one_all
+  table_column: board_column_name
+  position: 1
+  display: true
+index_view_column_board_name_one_active_only:
+  index_view: index_view_board_one_active_only
+  table_column: board_column_name
+  position: 1
+  display: true
+index_view_column_board_name_two_all:
+  index_view: index_view_board_two_all
+  table_column: board_column_name
+  position: 1
+  display: true
+index_view_column_board_name_two_active_only:
+  index_view: index_view_board_two_active_only
+  table_column: board_column_name
+  position: 1
+  display: true
+index_view_column_board_active_one_all:
+  index_view: index_view_board_one_all
+  table_column: board_column_active
+  position: 2
+  display: true
+index_view_column_board_active_one_active_only:
+  index_view: index_view_board_one_active_only
+  table_column: board_column_active
+  position: 2
+  display: true
+index_view_column_board_active_two_all:
+  index_view: index_view_board_two_all
+  table_column: board_column_active
+  position: 2
+  display: true
+index_view_column_board_active_two_active_only:
+  index_view: index_view_board_two_active_only
+  table_column: board_column_active
+  position: 2
+  display: true
+index_view_column_board_edit_one_all:
+  index_view: index_view_board_one_all
+  table_column: board_column_edit
+  position: 4
+  display: true
+index_view_column_board_edit_one_active_only:
+  index_view: index_view_board_one_active_only
+  table_column: board_column_edit
+  position: 4
+  display: true
+index_view_column_board_edit_two_all:
+  index_view: index_view_board_two_all
+  table_column: board_column_edit
+  position: 4
+  display: true
+index_view_column_board_edit_two_active_only:
+  index_view: index_view_board_two_active_only
+  table_column: board_column_edit
+  position: 4
+  display: true
+index_view_column_board_delete_one_all:
+  index_view: index_view_board_one_all
+  table_column: board_column_delete
+  position: 5
+  display: true
+index_view_column_board_delete_one_active_only:
+  index_view: index_view_board_one_active_only
+  table_column: board_column_delete
+  position: 5
+  display: true
+index_view_column_board_delete_two_all:
+  index_view: index_view_board_two_all
+  table_column: board_column_delete
+  position: 5
+  display: true
+index_view_column_board_delete_two_active_only:
+  index_view: index_view_board_two_active_only
+  table_column: board_column_delete
+  position: 5
+  display: true
+index_view_column_board_owner_name_one_all:
+  index_view: index_view_board_one_all
+  table_column: board_column_owner_name
+  position: 3
+  display: true
+index_view_column_board_owner_name_one_active_only:
+  index_view: index_view_board_one_active_only
+  table_column: board_column_owner_name
+  position: 3
+  display: true
+index_view_column_board_owner_name_two_all:
+  index_view: index_view_board_two_all
+  table_column: board_column_owner_name
+  position: 3
+  display: true
+index_view_column_board_owner_name_two_active_only:
+  index_view: index_view_board_two_active_only
+  table_column: board_column_owner_name
+  position: 3
+  display: true
+index_view_column_board_open_one_all:
+  index_view: index_view_board_one_all
+  table_column: board_column_open
+  position: 11
+  display: true
+index_view_column_board_open_one_active_only:
+  index_view: index_view_board_one_active_only
+  table_column: board_column_open
+  position: 11
+  display: true
+index_view_column_board_open_two_all:
+  index_view: index_view_board_two_all
+  table_column: board_column_open
+  position: 11
+  display: true
+index_view_column_board_open_two_active_only:
+  index_view: index_view_board_two_active_only
+  table_column: board_column_open
+  position: 11
   display: true

@@ -1,0 +1,3 @@
+<%= render Forms::PageComponent.new(title: t(".title"), model: @board) do %>
+  <%= render "form", board: @board, search_session_token: search_session_token %>
+<% end %>

@@ -119,7 +119,7 @@ module SearchSessionManageable
   def apply_search_session(base_query, index_view)
     set_search_session_index_view_id(index_view)
     query = SearchQueryBuilder.new(base_query, @search_session, index_view, params).build
-    pagy, results = pagy(query.result(distinct: true), page: search_session_page)
+    pagy, results = pagy(query.result, page: search_session_page)
     [query, pagy, results]
   end
 

@@ -12,4 +12,5 @@ User.create!(name: "John Doe", email: "john.doe@example.com", logged_in: true) u
 User.create!(name: "Jane Doe", email: "jane.doe@example.com", logged_in: false) unless User.exists?(email: "jane.doe@example.com")
 
 Document.create_or_update_default_table_columns!
+Board.create_or_update_default_table_columns!
 IndexView.create_default_views
