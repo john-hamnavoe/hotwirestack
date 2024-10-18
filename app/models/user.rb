@@ -11,4 +11,8 @@
 #
 class User < ApplicationRecord
   has_many :index_views
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "email", "logged_in", "name", "updated_at"]
+  end
 end

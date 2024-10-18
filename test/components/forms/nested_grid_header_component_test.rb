@@ -9,6 +9,6 @@ class Forms::NestedGridHeaderComponentTest < ViewComponent::TestCase
 
     render_inline(component)
 
-    assert_selector "div.grid.grid-cols-4"
+    assert_selector "div.grid.grid-cols-6"
   end
 end

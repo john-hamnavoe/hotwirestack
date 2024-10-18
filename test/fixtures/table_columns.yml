@@ -60,3 +60,57 @@ document_column_delete:
   primary: false
   sr_only: true
   method_proc: false
+board_column_name:
+  table_entity: table_board
+  attribute_name: name
+  header: Name
+  position: 1
+  column_type: standard
+  primary: true
+  sr_only: false
+  method_proc: false
+board_column_active:
+  table_entity: table_board
+  attribute_name: active
+  header: Active
+  position: 2
+  column_type: standard
+  primary: false
+  sr_only: false
+  method_proc: true
+board_column_edit:
+  table_entity: table_board
+  attribute_name: edit
+  header: Edit
+  position: 4
+  column_type: action
+  primary: false
+  sr_only: true
+  method_proc: false
+board_column_delete:
+  table_entity: table_board
+  attribute_name: delete
+  header: Delete
+  position: 5
+  column_type: action
+  primary: false
+  sr_only: true
+  method_proc: false
+board_column_owner_name:
+  table_entity: table_board
+  attribute_name: owner_name
+  header: Owner
+  position: 3
+  column_type: standard
+  primary: false
+  sr_only: false
+  method_proc: false
+board_column_open:
+  table_entity: table_board
+  attribute_name: open
+  header: Open
+  position: 11
+  column_type: action
+  primary: false
+  sr_only: true
+  method_proc: false

@@ -37,7 +37,7 @@
     </div>
 
     <!-- Active item side-panel, show/hide based on active state -->
-    <% src = @index_view.active_filter_id.present? ? index_view_filter_path(@index_view, @index_view.active_filter) : nil %>
+    <% src = @index_view.active_filter_id.present? ?  with_search_session_token(index_view_filter_path(@index_view, @index_view.active_filter)) : nil %>
     <div class="hidden h-128 w-2/3 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
       <%= turbo_frame_tag dom_id(@index_view, :filter), src: src do %>
       <% end %>

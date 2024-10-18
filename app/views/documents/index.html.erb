@@ -2,11 +2,7 @@
 
 <% frame = "documents_index" %>
 
-
-
-
 <%= render Index::ContainerComponent.new do |c| %>
-
   <% c.with_tabs(:documents_path, @index_views, @index_view, search_session_token) %>
   <% c.with_header(title: t(".title"), action_text: t(".new_document"), action_path: with_search_session_token(new_document_path)) %>
 

@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_14_124434) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_17_153848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "boards", force: :cascade do |t|
+    t.string "name"
+    t.bigint "owner_id", null: false
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_boards_on_owner_id"
+  end
 
   create_table "documents", force: :cascade do |t|
     t.string "title"
@@ -132,6 +141,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_124434) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "boards", "users", column: "owner_id"
   add_foreign_key "filter_conditional_groups", "filters"
   add_foreign_key "filter_conditions", "filter_conditional_groups"
   add_foreign_key "filter_conditions", "table_columns"

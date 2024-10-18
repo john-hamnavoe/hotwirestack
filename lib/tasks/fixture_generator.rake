@@ -94,7 +94,7 @@ namespace :fixture_generator do
         ["all", "active_only"].each do |scope|
           index_view_fixture_name = "index_view_#{column.model_class_name}_#{user}_#{scope}".gsub(/\s+/, "").downcase
           table_column_fixture_name = "#{column.model_class_name}_column_#{column.attribute_name}".gsub(/\s+/, "").downcase
-          fixture_name = "index_view_column_#{column.attribute_name}_#{user}_#{scope}".gsub(/\s+/, "").downcase
+          fixture_name = "index_view_column_#{column.model_class_name}_#{column.attribute_name}_#{user}_#{scope}".gsub(/\s+/, "").downcase
           index_view_columns_hash[fixture_name] = {
             "index_view" => index_view_fixture_name,
             "table_column" => table_column_fixture_name,

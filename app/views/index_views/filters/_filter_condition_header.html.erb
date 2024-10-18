@@ -1,6 +1,6 @@
-<%= content_tag :div, class: "grid grid-cols-4" do %>
-  <div><%= render(Forms::LabelComponent.new(title: t(".column"))) %></div>
+<%= content_tag :div, class: "grid grid-cols-6" do %>
+  <div class="col-span-2"><%= render(Forms::LabelComponent.new(title: t(".column"))) %></div>
   <div><%= render(Forms::LabelComponent.new(title: t(".predicate"))) %></div>
-  <div><%= render(Forms::LabelComponent.new(title: t(".value"))) %></div>
+  <div class="col-span-2"><%= render(Forms::LabelComponent.new(title: t(".value"))) %></div>
   <div></div>
 <% end %>   

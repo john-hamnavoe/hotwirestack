@@ -19,16 +19,25 @@ class DocumentsTest < ApplicationSystemTestCase
     click_on "Save"
 
     assert_selector "td", text: "New Shinny Document"
+    assert_text "Document was successfully created"
   end
 
   test "should update document" do
-    # visit documents_path
-    #  click_on "Edit", match: :first
+    visit documents_path
+    click_on "Edit", match: :first
 
-    #  check "Active" if @document.active
-    #  fill_in "Title", with: "Updated Shinny Document"
-    #  click_on "Save"
+    check "Active" if @document.active
+    fill_in "Title", with: "Updated Shinny Document"
+    click_on "Save"
 
-    # assert_selector "td", text: "Updated Shinny Document"
+    assert_selector "td", text: "Updated Shinny Document"
+    assert_text "Document was successfully updated"
+  end
+
+  test "should destroy document" do
+    visit documents_path
+    click_on "Delete", match: :first
+    accept_confirm
+    assert_text "Document was successfully destroyed"
   end
 end

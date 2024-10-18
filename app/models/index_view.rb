@@ -83,7 +83,7 @@ class IndexView < ApplicationRecord
     def create_default_views_for_user(user)
       TableEntity.all.each do |table_entity|
         index_view = find_or_create_by(default: true, table_entity: table_entity, user: user) do |index_view|
-          index_view.name = "Default view for #{table_entity.model_class_name.downcase.pluralize}"
+          index_view.name = "Default view"
         end
 
         index_view.create_default_columns

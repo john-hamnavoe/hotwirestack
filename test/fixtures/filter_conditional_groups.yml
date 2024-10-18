@@ -23,3 +23,9 @@ filter_group_document_one_active_only:
 filter_group_document_two_active_only:
   filter: filter_document_two_active_only
   conditional_expression: 0
+filter_group_board_one_active_only:
+  filter: filter_board_one_active_only
+  conditional_expression: 0
+filter_group_board_two_active_only:
+  filter: filter_board_two_active_only
+  conditional_expression: 0
