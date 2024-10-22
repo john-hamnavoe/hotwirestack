@@ -21,6 +21,10 @@ development:
     <<: *default
     database: hotwirestack_development_cache
     migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: hotwirestack_development_queue
+    migrations_paths: db/queue_migrate
 
 production:
   primary: &primary_production
@@ -51,6 +55,8 @@ rails db:create
 rails db:migrate
 rails db:create:cache
 rails db:migrate:cache
+rails db:create:queue
+rails db:migrate:queue
 ```
 
 

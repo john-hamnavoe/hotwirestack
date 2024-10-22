@@ -39,6 +39,8 @@ en:
     select: "Select"
     clear_filter: "Clear filter"
     open: "Open"
+    csv: "CSV"
+    excel: "Excel"
   labels:
     active: "Active"
     filter: "Filter: %{name}"

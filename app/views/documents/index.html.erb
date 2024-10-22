@@ -4,7 +4,7 @@
 
 <%= render Index::ContainerComponent.new do |c| %>
   <% c.with_tabs(:documents_path, @index_views, @index_view, search_session_token) %>
-  <% c.with_header(title: t(".title"), action_text: t(".new_document"), action_path: with_search_session_token(new_document_path)) %>
+  <% c.with_header(title: t(".title"), action_text: t(".new_document"), action_path: with_search_session_token(new_document_path), download_path: with_search_session_token(documents_path(format: :csv))) %>
 
   <% c.with_search_form(query: @query, frame: frame, search_field_predicate: :title_cont, placeholder: t(".search_placeholder"), search_session_token: search_session_token) do |s| %>
     <% s.with_config_dropdowns(index_view: @index_view, refresh_frame: frame, refresh_path: documents_path(index_view_id: @index_view.id, search_session_token: search_session_token), search_session_token: search_session_token)  %>

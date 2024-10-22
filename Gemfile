@@ -71,6 +71,8 @@ end
 
 gem "acts_as_list"
 gem "acts-as-taggable-on"
+gem "caxlsx"
+gem "caxlsx_rails"
 gem "pagy"
 gem "ransack"
 gem "view_component"

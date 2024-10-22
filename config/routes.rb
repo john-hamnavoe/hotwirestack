@@ -74,7 +74,7 @@ Rails.application.routes.draw do
 
   resources :documents
   resources :boards
-
+  resources :index_view_downloads, only: [:create]
   resources :index_views do
     resources :filters, only: [:index, :show, :new, :create, :edit, :update, :destroy], controller: "index_views/filters"
     resource :active_filter, only: [:update], controller: "index_views/active_filter"

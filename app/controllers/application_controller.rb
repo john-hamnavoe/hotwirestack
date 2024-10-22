@@ -8,6 +8,20 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def handle_index_response(records, index_view)
+    respond_to do |format|
+      format.html
+      format.csv do
+        respond_with_csv(records, index_view)
+      end
+    end
+  end
+
+  def respond_with_csv(records, index_view)
+    filename = [index_view.name, Date.today.to_s].join(" ") + ".csv"
+    send_data index_view.generate_csv(records), filename: filename, content_type: "text/csv"
+  end
+
   def handle_create(record, params, redirect_path)
     if record.save
       redirect_to with_search_session_token(redirect_path), notice: t("messages.created", record_name: record.class.name.humanize)

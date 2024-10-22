@@ -15,7 +15,7 @@
         <div data-controller="dropdown" data-action="click@window->dropdown#hide touchstart@window->dropdown#hide keydown.up->dropdown#previousItem keydown.down->dropdown#nextItem keydown.esc->dropdown#hide" class="space-y-2 pt-6">
           <%= render Header::DropdownComponent.new(
             title: "Examples", 
-            items: [{ title: "Documents", path: documents_path }], 
+            items: [{ title: "Documents", path: documents_path }, { title: "Boards", path: boards_path }], 
             mobile: true
           ) %>
         </div>
