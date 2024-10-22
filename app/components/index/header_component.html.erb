@@ -3,7 +3,7 @@
     <h1 class="text-base font-semibold leading-6 text-gray-900"><%= @title %></h1>
   </div>
   <div class="mt-4 sm:ml-16 sm:mt-0 flex gap-x-4">
-    <%= render Index::DownloadMenuComponent.new(download_path: @download_path) %>
+    <%= render Index::DownloadMenuComponent.new(download_path: @download_path) if @download_path %>
     <%= render Button::ActionComponent.new(path: @action_path, text: @action_text) %>
   </div>
 </div>
