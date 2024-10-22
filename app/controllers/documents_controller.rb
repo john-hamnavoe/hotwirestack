@@ -6,6 +6,7 @@ class DocumentsController < ApplicationController
   # GET /documents or /documents.json
   def index
     @query, @pagy, @documents = apply_search_session(Document, @index_view)
+    handle_index_response(@query.result, @index_view)
   end
 
   # GET /documents/1 or /documents/1.json

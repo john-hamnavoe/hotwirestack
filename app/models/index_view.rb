@@ -23,6 +23,7 @@
 #  fk_rails_...  (table_entity_id => table_entities.id)
 #  fk_rails_...  (user_id => users.id)
 #
+require "csv"
 class IndexView < ApplicationRecord
   belongs_to :table_entity
   belongs_to :user
@@ -56,6 +57,17 @@ class IndexView < ApplicationRecord
     table_entity.table_columns.order(:position).each_with_index do |table_column, index|
       index_view_columns.find_or_create_by(table_column: table_column) do |index_view_column|
         index_view_column.position = index + max_position + 1
+      end
+    end
+  end
+
+  def generate_csv(collection)
+    export_columns = displayed_index_view_columns.where(table_column: {column_type: :standard})
+
+    CSV.generate do |csv|
+      csv << export_columns.map(&:table_column_header)
+      collection.each do |item|
+        csv << export_columns.map { |column| item.send(column.table_column_attribute_name) }
       end
     end
   end

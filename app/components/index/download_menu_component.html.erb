@@ -1,0 +1,14 @@
+<div class="relative" data-controller="dropdown" data-action="click@window->dropdown#hide touchstart@window->dropdown#hide keydown.up->dropdown#previousItem keydown.down->dropdown#nextItem keydown.esc->dropdown#hide">
+  <div class="-mx-3">
+    <button data-action="dropdown#toggle:stop" type="button" class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" aria-controls="disclosure-1" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+      </svg>
+    </button>
+    <div data-dropdown-target="menu" class="hidden absolute -left-2 top-full z-10 mt-3 w-max max-w-md min-w-32 overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5" id="export-1">
+      <%= link_to t("buttons.csv"), @download_path, class: "block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"  %>
+      <%= link_to t("buttons.excel"), "#", class: "block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"  %>      
+      <div><p><%= @action_path %></p></div>
+    </div>
+  </div>
+</div>

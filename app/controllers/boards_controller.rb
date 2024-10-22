@@ -6,6 +6,7 @@ class BoardsController < ApplicationController
   # GET /boards or /boards.json
   def index
     @query, @pagy, @boards = apply_search_session(Board.includes(:owner), @index_view)
+    handle_index_response(@query.result, @index_view)
   end
 
   # GET /boards/1 or /boards/1.json
