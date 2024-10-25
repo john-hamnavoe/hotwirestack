@@ -51,7 +51,7 @@ class ApplicationCache
   end
 
   def not_found?
-    @original_attributes.nil? || @original_attributes.empty?
+    @original_attributes.blank?
   end
 
   def found?

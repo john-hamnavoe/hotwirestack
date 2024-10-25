@@ -29,11 +29,13 @@ class Forms::TextInputComponentTest < ViewComponent::TestCase
       render_inline(Forms::FieldComponent.new(form, @field)) do |field|
         field.with_input_text(rounded: true)
       end
+
       assert_selector 'input[type="text"]', class: /\brounded-md\b/
 
       render_inline(Forms::FieldComponent.new(form, @field)) do |field|
         field.with_input_text(rounded: false)
       end
+
       assert_selector 'input[type="text"]', class: /\brounded-none\b/
     end
   end
@@ -46,6 +48,7 @@ class Forms::TextInputComponentTest < ViewComponent::TestCase
         field.with_input_number(placeholder: "Enter title", autocomplete: "on", autofocus: true)
       end
     end
+
     assert_selector 'input[type="number"][placeholder="Enter title"][autocomplete="on"][autofocus]'
   end
 end

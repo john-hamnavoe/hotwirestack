@@ -124,7 +124,7 @@ module SearchSessionManageable
   end
 
   def set_search_session_index_view_id(index_view)
-    return unless index_view.present?
+    return if index_view.blank?
     new_index_view_id = index_view.id
     if @search_session.index_view_id != new_index_view_id
       @search_session.update(index_view_id: new_index_view_id.to_s)

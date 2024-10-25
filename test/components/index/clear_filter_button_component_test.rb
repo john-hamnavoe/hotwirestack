@@ -11,6 +11,7 @@ class Index::ClearFilterButtonComponentTest < ViewComponent::TestCase
 
   test "renders component" do
     render_inline(Index::ClearFilterButtonComponent.new(index_view: @index_view, search_session_token: @search_session))
+
     assert_selector "form[action='/index_views/#{@index_view.id}/active_filter?search_session_token=#{@search_session}']"
     assert_selector "span", text: "Clear filter"
   end

@@ -8,11 +8,13 @@ class IndexViewsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get show" do
     get index_view_path(@index_view)
+
     assert_response :success
   end
 
   test "should get new" do
     get new_index_view_path(table_entity_id: @table_entity.id)
+
     assert_response :success
   end
 

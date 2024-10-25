@@ -13,6 +13,9 @@ class IndexViews::FiltersController < ApplicationController
     @filter = @index_view.filters.new
   end
 
+  def edit
+  end
+
   def create
     @filter = @index_view.filters.new(filter_params)
     if @filter.save
@@ -20,9 +23,6 @@ class IndexViews::FiltersController < ApplicationController
     else
       render :new
     end
-  end
-
-  def edit
   end
 
   def update

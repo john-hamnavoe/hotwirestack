@@ -11,10 +11,11 @@ class DocumentsTest < ActionDispatch::IntegrationTest
   end
 
   test "index page displays documents - with correct links - caching applied" do
-    assert CacheConfig.cache_enabled?, "Cache is not enabled"
+    assert_predicate CacheConfig, :cache_enabled?, "Cache is not enabled"
 
     get documents_path
     index_views = assigns(:index_views)
+
     assert_equal 2, index_views.count
     assert_equal User.where(logged_in: true).first, assigns(:user)
 
@@ -22,6 +23,7 @@ class DocumentsTest < ActionDispatch::IntegrationTest
 
     documents = assigns(:documents)
     search_session_token = assigns(:search_session).token
+
     assert_equal 4, documents.count
     assert_not_nil search_session_token
 
@@ -32,45 +34,62 @@ class DocumentsTest < ActionDispatch::IntegrationTest
     assert_select "form[action='#{document_path(documents(:one), search_session_token: search_session_token)}'][method='post']"
 
     get documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 4, documents.count
 
     patch index_view_active_filter_path(@active_only_index_view, filter_id: @filter.id, search_session_token: search_session_token)
+
     assert_redirected_to documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
     get documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 3, documents.count
     assert_select "a[href='#{edit_document_path(documents(:one), search_session_token: search_session_token)}']", text: "Edit", count: 0
     assert_select "form[action='#{document_path(documents(:one), search_session_token: search_session_token)}'][method='post']", count: 0
 
     patch index_view_active_filter_path(@active_only_index_view, filter_id: nil, search_session_token: search_session_token)
+
     assert_redirected_to documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
     get documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 4, documents.count
     get documents_path(search_session_token: search_session_token, query: {title_cont: "One"})
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 1, documents.count
 
     patch index_view_active_filter_path(@active_only_index_view, filter_id: @filter.id, search_session_token: search_session_token)
+
     assert_redirected_to documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
     follow_redirect!
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 0, documents.count
 
     patch index_view_active_filter_path(@active_only_index_view, filter_id: nil, search_session_token: search_session_token)
+
     assert_redirected_to documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
     follow_redirect!
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 1, documents.count
 
     get edit_document_path(documents(:one), search_session_token: search_session_token)
+
     assert_response :success
     # assert_select "input[type='hidden'][name='search_session_token'][value='#{search_session_token}']"
 
@@ -159,12 +178,15 @@ class DocumentsTest < ActionDispatch::IntegrationTest
 
   test "index page displays documents - add new index view and filters, edit it and then delete it" do
     get documents_path
+
     assert_response :success
     documents = assigns(:documents)
     search_session_token = assigns(:search_session).token
+
     assert_equal 4, documents.count
 
     get new_index_view_path(table_entity_id: @table_entity.id, search_session_token: search_session_token)
+
     assert_response :success
     assert_select "input[type='hidden'][name='search_session_token'][value='#{search_session_token}']"
 
@@ -174,10 +196,13 @@ class DocumentsTest < ActionDispatch::IntegrationTest
       end
     end
     index_view = IndexView.find_by(name: "Testing an new index view")
+
     assert_redirected_to documents_path(index_view_id: index_view.id, search_session_token: search_session_token)
     follow_redirect!
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 4, documents.count
 
     table_column = table_columns(:document_column_active)
@@ -193,77 +218,104 @@ class DocumentsTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to documents_path(index_view_id: index_view.id, search_session_token: search_session_token)
     follow_redirect!
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 1, documents.count, "filter applied"
 
     get index_views_path(table_entity_id: @table_entity.id, search_session_token: search_session_token)
+
     assert_response :success
     index_views = assigns(:index_views)
+
     assert_equal 3, index_views.count
     assert_select "a[href='#{edit_index_view_path(index_view, search_session_token: search_session_token)}']", text: "Edit"
 
     get edit_index_view_path(index_view, search_session_token: search_session_token)
+
     assert_response :success
     assert_select "input[type='hidden'][name='search_session_token'][value='#{search_session_token}']"
 
     patch index_view_path(index_view, search_session_token: search_session_token), params: {index_view: {name: "Updated Index View"}}
+
     assert_redirected_to documents_path(index_view_id: index_view.id, search_session_token: search_session_token)
     follow_redirect!
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 1, documents.count, "filter applied"
 
     get index_views_path(table_entity_id: @table_entity.id, search_session_token: search_session_token)
+
     assert_response :success
     index_views = assigns(:index_views)
+
     assert_equal 3, index_views.count
     assert_select "form[action='#{index_view_path(index_view, search_session_token: search_session_token)}'][method='post']", count: 1
 
     delete index_view_path(index_view, search_session_token: search_session_token)
+
     assert_redirected_to documents_path(index_view_id: index_view.id, search_session_token: search_session_token)
     follow_redirect!
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 4, documents.count, "back to default index view"
     search_session = assigns(:search_session)
+
     assert_equal @default_index_view.id.to_s, search_session.index_view_id
   end
 
   test "changing index_views and searcha and sort persisetance via search session" do
     @active_only_index_view.update(active_filter_id: @filter.id)
     get documents_path
+
     assert_response :success
     documents = assigns(:documents)
     search_session_token = assigns(:search_session).token
+
     assert_equal 4, documents.count
 
     get documents_path(search_session_token: search_session_token, query: {title_cont: "One", s: "title asc"})
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 1, documents.count
 
     get documents_path(index_view_id: @active_only_index_view.id, search_session_token: search_session_token)
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 3, documents.count
     search_session = assigns(:search_session)
+
     assert_nil search_session.sort
-    assert_equal({}, search_session.query.to_h)
+    assert_empty(search_session.query.to_h)
 
     get documents_path(search_session_token: search_session_token, query: {title_cont: "Three"})
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 1, documents.count
     search_session = assigns(:search_session)
+
     assert_nil search_session.sort
     assert_equal({"title_cont" => "Three"}, search_session.query.to_h)
 
     get documents_path(index_view_id: @default_index_view.id, search_session_token: search_session_token)
+
     assert_response :success
     documents = assigns(:documents)
+
     assert_equal 1, documents.count
     search_session = assigns(:search_session)
+
     assert_equal({"title_cont" => "One"}, search_session.query.to_h)
     assert_equal("title asc", search_session.sort)
   end

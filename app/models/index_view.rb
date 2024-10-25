@@ -31,8 +31,8 @@ class IndexView < ApplicationRecord
   belongs_to :active_filter, class_name: "Filter", optional: true
   has_many :filters, dependent: :destroy
   has_many :index_view_columns, dependent: :destroy
-  has_many :displayed_index_view_columns, -> { displayed.order(:position) }, class_name: "IndexViewColumn"
-  has_many :hidden_index_view_columns, -> { hidden.order(:position) }, class_name: "IndexViewColumn"
+  has_many :displayed_index_view_columns, -> { displayed.order(:position) }, class_name: "IndexViewColumn", dependent: :destroy, inverse_of: :index_view
+  has_many :hidden_index_view_columns, -> { hidden.order(:position) }, class_name: "IndexViewColumn", dependent: :destroy, inverse_of: :index_view
   accepts_nested_attributes_for :index_view_columns, allow_destroy: true
 
   delegate :model_class_name, to: :table_entity, prefix: true
@@ -87,13 +87,13 @@ class IndexView < ApplicationRecord
 
   class << self
     def create_default_views
-      User.all.each do |user|
+      User.find_each do |user|
         create_default_views_for_user(user)
       end
     end
 
     def create_default_views_for_user(user)
-      TableEntity.all.each do |table_entity|
+      TableEntity.find_each do |table_entity|
         index_view = find_or_create_by(default: true, table_entity: table_entity, user: user) do |index_view|
           index_view.name = "Default view"
         end

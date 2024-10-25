@@ -8,11 +8,13 @@ class IndexViews::FiltersControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get index_view_filters_path(@index_view)
+
     assert_response :success
   end
 
   test "should get new" do
     get new_index_view_filter_path(@index_view)
+
     assert_response :success
   end
 
@@ -25,11 +27,13 @@ class IndexViews::FiltersControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit" do
     get edit_index_view_filter_path(@index_view, @filter)
+
     assert_response :success
   end
 
   test "should update" do
     patch index_view_filter_path(@index_view, @filter), params: {filter: {name: "Updated Filter"}, search_session_token: "XXXXX"}
+
     assert_redirected_to documents_path(index_view_id: @index_view.id, search_session_token: "XXXXX")
   end
 

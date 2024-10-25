@@ -53,7 +53,7 @@ module HasTableConfiguration
     end
 
     def remove_unused_columns
-      default_attributes = default_table_columns.map { |columns| columns[:attribute_name] }
+      default_attributes = default_table_columns.pluck(:attribute_name)
       table_columns.where.not(attribute_name: default_attributes).destroy_all
     end
   end

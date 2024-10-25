@@ -8,15 +8,19 @@ class IndexViews::ActiveFilterControllerTest < ActionDispatch::IntegrationTest
 
   test "should update" do
     patch index_view_active_filter_path(@index_view), params: {filter_id: @filter.id, search_session_token: "XXXXX"}
+
     assert_redirected_to documents_path(index_view_id: @index_view.id, search_session_token: "XXXXX")
 
     @index_view.reload
+
     assert_equal @filter, @index_view.active_filter
 
     patch index_view_active_filter_path(@index_view), params: {filter_id: nil, search_session_token: "XXXXX"}
+
     assert_redirected_to documents_path(index_view_id: @index_view.id, search_session_token: "XXXXX")
 
     @index_view.reload
+
     assert_nil @index_view.active_filter
   end
 end

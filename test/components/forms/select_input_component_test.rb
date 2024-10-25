@@ -20,6 +20,7 @@ class Forms::SelectInputComponentTest < ViewComponent::TestCase
     component = Forms::SelectInputComponent.new(form, :field_name, options: options)
 
     render_inline(component)
+
     assert_selector "select"
     form.verify
   end

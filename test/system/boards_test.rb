@@ -7,6 +7,7 @@ class BoardsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit boards_path
+
     assert_selector "h1", text: "Boards"
   end
 
