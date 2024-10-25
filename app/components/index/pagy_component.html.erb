@@ -12,7 +12,7 @@
     <div>
       <% if index_view&.active_filter.present? %>
         <span class="flex items-center">
-          <p class="text-xs text-green-600 font-semibold"><%= t("labels.filter", name: index_view.active_filter.name) %></p>        
+          <p class="text-xs text-green-600 font-semibold"><%= t("labels.filter", name: index_view.active_filter.name) %></p>
           <%= render Index::ClearFilterButtonComponent.new(index_view: index_view, search_session_token: search_session_token) %>
         </span>
       <% end %>

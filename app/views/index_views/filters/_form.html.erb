@@ -1,20 +1,20 @@
 <%= form_with(model: [index_view, filter], data: {turbo_frame: "_top"}) do |form| %>
   <%= search_session_token_hidden_field %>
-  <%= render(Forms::FieldsContainerComponent.new) do  %>
+  <%= render(Forms::FieldsContainerComponent.new) do %>
     <%= render Forms::FieldComponent.new(form, :name, span: :full) do |field| %>
       <% field.with_input_text(autofocus: true) %>
-    <% end %>    
+    <% end %>
     <div class="col-span-full">
-      <%= render(Forms::NestedSectionComponent.new()) do |nest|  %>
+      <%= render(Forms::NestedSectionComponent.new) do |nest| %>
         <% nest.with_template(form, :filter_conditional_groups, FilterConditionalGroup.new, "index_views/filters/filter_conditional_group_fields", {table_entity_id: index_view.table_entity_id}) %>
-        <% nest.with_add_link(t(".add_conditional_block"))%>
+        <% nest.with_add_link(t(".add_conditional_block")) %>
 
         <%= form.fields_for :filter_conditional_groups do |filter_conditional_groups| %>
           <%= render "index_views/filters/filter_conditional_group_fields", form: filter_conditional_groups, table_entity_id: index_view.table_entity_id %>
         <% end %>
-      <% end %>    
+      <% end %>
     </div>
-  <% end %>    
+  <% end %>
   <% cancel_path = filter.persisted? ? index_view_filter_path(index_view, filter, search_session_token: search_session_token) : nil %>
-  <%= render Forms::FooterComponent.new(form, cancel_path, false)  %>
+  <%= render Forms::FooterComponent.new(form, cancel_path, false) %>
 <% end %>

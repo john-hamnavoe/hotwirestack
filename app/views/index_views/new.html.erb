@@ -2,6 +2,6 @@
   <%= form_with(model: @index_view, data: {turbo_frame: "_top"}) do |form| %>
   <%= render Forms::ErrorMessageComponent.new(@index_view) %>
     <%= render "form_fields", form: form, index_view: @index_view %>
-    <%= render Forms::FooterComponent.new(form, nil, false)  %>
+    <%= render Forms::FooterComponent.new(form, nil, false) %>
   <% end %>
 <% end %>

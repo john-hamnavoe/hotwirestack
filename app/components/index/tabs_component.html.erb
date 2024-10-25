@@ -6,9 +6,9 @@
       <% border_color = is_active ? "border-blue-600" : "border-gray-200" %>
       <% bg_color = is_active ? "bg-white" : "bg-gray-50" %>
       <% bottom_border = is_active ? "-mb-0.5" : "" %>
-      <%= link_to send("#{starting_path}", search_session_token: search_session_token, index_view_id: index_view.id), 
-          class: "#{bottom_border} flex-shrink-0 px-4 py-2 font-medium text-gray-600 border-l border-t border-r rounded-t-md focus:outline-indigo-600 #{border_color} #{bg_color}",
-          data: { turbo_action: "advance", turbo_prefetch: false} do %>
+      <%= link_to send(starting_path.to_s, search_session_token: search_session_token, index_view_id: index_view.id),
+            class: "#{bottom_border} flex-shrink-0 px-4 py-2 font-medium text-gray-600 border-l border-t border-r rounded-t-md focus:outline-indigo-600 #{border_color} #{bg_color}",
+            data: {turbo_action: "advance", turbo_prefetch: false} do %>
         <%= index_view.name %>
       <% end %>
     <% end %>
@@ -16,8 +16,8 @@
 
   <!-- Add View and See All Views Links -->
   <div class="flex items-center space-x-4 ml-4 flex-grow min-w-0 flex-shrink-0">
-    <div class="relative" data-controller="reload-dropdown" 
-      data-reload-dropdown-frame-value="<%= dom_id(selected_index_view.table_entity, :new) %>" 
+    <div class="relative" data-controller="reload-dropdown"
+      data-reload-dropdown-frame-value="<%= dom_id(selected_index_view.table_entity, :new) %>"
       data-reload-dropdown-refresh-path-value="<%= "#" %>"
       data-reload-dropdown-refresh-frame-value="<%= "#" %>"
       data-action="click@window->reload-dropdown#hide touchstart@window->reload-dropdown#hide keydown.up->reload-dropdown#previousItem keydown.down->reload-dropdown#nextItem keydown.esc->reload-dropdown#hide">
