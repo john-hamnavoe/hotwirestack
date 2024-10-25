@@ -14,10 +14,10 @@
       <div class="-my-6 divide-y divide-gray-500/10">
         <div data-controller="dropdown" data-action="click@window->dropdown#hide touchstart@window->dropdown#hide keydown.up->dropdown#previousItem keydown.down->dropdown#nextItem keydown.esc->dropdown#hide" class="space-y-2 pt-6">
           <%= render Header::DropdownComponent.new(
-            title: "Examples", 
-            items: [{ title: "Documents", path: documents_path }, { title: "Boards", path: boards_path }], 
-            mobile: true
-          ) %>
+                title: "Examples",
+                items: [{title: "Documents", path: documents_path}, {title: "Boards", path: boards_path}],
+                mobile: true
+              ) %>
         </div>
         <div class="py-2">
           <%= link_to "About", about_index_path, class: "-mx-3 block rounded-lg px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" %>

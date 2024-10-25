@@ -1,9 +1,9 @@
 <%= form_with(model: document) do |form| %>
   <%= search_session_token_hidden_field %>
-  <%= render(Forms::FieldsContainerComponent.new) do  %>
+  <%= render(Forms::FieldsContainerComponent.new) do %>
     <%= render Forms::FieldComponent.new(form, :title, span: :third) do |field| %>
       <% field.with_input_text(autofocus: true) %>
-    <% end %>    
-  <% end %>     
-  <%= render Forms::FooterComponent.new(form, with_search_session_token(documents_path))  %>
+    <% end %>
+  <% end %>
+  <%= render Forms::FooterComponent.new(form, with_search_session_token(documents_path)) %>
 <% end %>

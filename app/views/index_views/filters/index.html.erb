@@ -16,10 +16,9 @@
           </svg>
           <% end %>
 
-
           <span class="ml-3 flex-auto truncate"><%= filter.name %></span>
-          <%= link_to with_search_session_token(index_view_filter_path(@index_view, filter)), data: { turbo_frame: dom_id(@index_view, :filter) } do %>
-            <% text = @index_view.active_filter_id == filter.id ? "text-gray-600" : "text-gray-400" %>
+          <%= link_to with_search_session_token(index_view_filter_path(@index_view, filter)), data: {turbo_frame: dom_id(@index_view, :filter)} do %>
+            <% text = (@index_view.active_filter_id == filter.id) ? "text-gray-600" : "text-gray-400" %>
             <span class="sr-only"><%= t(".view_filter") %></span>
             <svg class="ml-3  h-5 w-5 flex-non <%= text %>" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
               <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -32,12 +31,12 @@
         <%= render Index::ClearFilterButtonComponent.new(index_view: @index_view, search_session_token: search_session_token) %>
       <% end %>
       <div class="mt-6 px-4">
-        <%= render Button::ActionComponent.new(path: with_search_session_token(new_index_view_filter_path(@index_view)), text: t(".add_filter"), data: { turbo_frame: dom_id(@index_view, :filter) }) %>
+        <%= render Button::ActionComponent.new(path: with_search_session_token(new_index_view_filter_path(@index_view)), text: t(".add_filter"), data: {turbo_frame: dom_id(@index_view, :filter)}) %>
       </div>
     </div>
 
     <!-- Active item side-panel, show/hide based on active state -->
-    <% src = @index_view.active_filter_id.present? ?  with_search_session_token(index_view_filter_path(@index_view, @index_view.active_filter)) : nil %>
+    <% src = @index_view.active_filter_id.present? ? with_search_session_token(index_view_filter_path(@index_view, @index_view.active_filter)) : nil %>
     <div class="hidden h-128 w-2/3 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
       <%= turbo_frame_tag dom_id(@index_view, :filter), src: src do %>
       <% end %>

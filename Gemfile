@@ -49,11 +49,15 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
+  # Debugging
+  gem "pry"
+  gem "pry-remote"
+
+  # Linting
+  gem "erb_lint", require: false
   gem "standard"
   gem "rubocop-rails", require: false
   gem "rubocop-minitest", require: false
-  gem "pry"
-  gem "pry-remote"
 end
 
 group :development do

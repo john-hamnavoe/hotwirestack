@@ -1,11 +1,11 @@
   <div class="bg-white py-3 flex justify-between max-w-lg">
-    <div> 
-      <%= render Forms::ButtonSubmitComponent.new(width: button_width) %>    
-      <%= render Forms::ButtonCancelComponent.new(cancel_path, width: button_width) if cancel_path %>      
+    <div>
+      <%= render Forms::ButtonSubmitComponent.new(width: button_width) %>
+      <%= render Forms::ButtonCancelComponent.new(cancel_path, width: button_width) if cancel_path %>
     </div>
     <% if include_active %>
       <div class="text-right">
         <%= render Forms::CheckboxInputComponent.new(form, :active) %>
       </div>
     <% end %>
-  </div> 
+  </div>

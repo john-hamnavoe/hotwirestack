@@ -3,7 +3,7 @@
 
 <%= render Index::HeaderComponent.new(title: title, action_text: t(".new_index_view"), action_path: with_search_session_token(new_index_view_path(table_entity_id: @table_entity.id))) %>
 <%= render Tables::TableComponent.new do |table| %>
-  <% table.with_header((t(".name"))) %>
+  <% table.with_header(t(".name")) %>
   <% table.with_header(t("buttons.select"), sr_only: true) %>
   <% table.with_header(t("buttons.edit"), sr_only: true) %>
   <% table.with_header(t("buttons.delete"), sr_only: true) %>
@@ -13,7 +13,7 @@
         <%= index_view.name %>
       <% end %>
       <%= row.with_cell(text_align: :right) do %>
-        <%= render Button::LinkComponent.new(text: t("buttons.select"), path: index_view_redirect_path(index_view))%>
+        <%= render Button::LinkComponent.new(text: t("buttons.select"), path: index_view_redirect_path(index_view)) %>
       <% end %>
       <%= row.with_cell(text_align: :right) do %>
         <%= link_to t("buttons.edit"), with_search_session_token(edit_index_view_path(index_view)), class: "text-indigo-600 hover:text-indigo-900" %>
@@ -26,5 +26,3 @@
     <% end %>
   <% end %>
 <% end %>
-
-

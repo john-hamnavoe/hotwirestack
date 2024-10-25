@@ -1,4 +1,4 @@
-<%= content_tag :div, class: "grid grid-cols-6 nested-fields", data: { new_record: form.object.new_record? } do %>
+<%= content_tag :div, class: "grid grid-cols-6 nested-fields", data: {new_record: form.object.new_record?} do %>
   <div class="col-span-2">
     <%= render Forms::FieldComponent.new(form, :table_column_id, label_class: "sr-only") do |field| %>
       <% field.with_input_select(options: columns_for_select(table_entity_id), html_options: {rounded: false}) %>
@@ -13,9 +13,9 @@
     <%= render Forms::FieldComponent.new(form, :value, label_class: "sr-only") do |field| %>
       <% field.with_input_text(rounded: false) %>
     <% end %>
-  </div>  
+  </div>
   <div class="p-2">
-    <small><%= link_to "Delete", "#", class: "text-red-600", data: { action: "click->nested-form#remove_association" } %></small>
+    <small><%= link_to "Delete", "#", class: "text-red-600", data: {action: "click->nested-form#remove_association"} %></small>
   </div>
   <%= form.hidden_field :_destroy %>
 <% end %>
