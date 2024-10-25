@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_17_153848) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_23_090338) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -55,6 +55,17 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_17_153848) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["index_view_id"], name: "index_filters_on_index_view_id"
+  end
+
+  create_table "fragments", force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.string "element"
+    t.string "data"
+    t.integer "position"
+    t.string "meta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_fragments_on_document_id"
   end
 
   create_table "index_view_columns", force: :cascade do |t|
@@ -146,6 +157,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_17_153848) do
   add_foreign_key "filter_conditions", "filter_conditional_groups"
   add_foreign_key "filter_conditions", "table_columns"
   add_foreign_key "filters", "index_views"
+  add_foreign_key "fragments", "documents"
   add_foreign_key "index_view_columns", "index_views"
   add_foreign_key "index_view_columns", "table_columns"
   add_foreign_key "index_views", "filters", column: "active_filter_id"

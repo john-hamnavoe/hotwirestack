@@ -4,6 +4,11 @@
 #                                                 /assets                                                                                           Propshaft::Server
 #                              about_index GET    /about/index(.:format)                                                                            about#index
 #                                     root GET    /                                                                                                 home#index
+#                       document_fragments POST   /documents/:document_id/fragments(.:format)                                                       documents/fragments#create
+#                        document_fragment GET    /documents/:document_id/fragments/:id(.:format)                                                   documents/fragments#show
+#                                          PATCH  /documents/:document_id/fragments/:id(.:format)                                                   documents/fragments#update
+#                                          PUT    /documents/:document_id/fragments/:id(.:format)                                                   documents/fragments#update
+#                                          DELETE /documents/:document_id/fragments/:id(.:format)                                                   documents/fragments#destroy
 #                                documents GET    /documents(.:format)                                                                              documents#index
 #                                          POST   /documents(.:format)                                                                              documents#create
 #                             new_document GET    /documents/new(.:format)                                                                          documents#new
@@ -20,6 +25,7 @@
 #                                          PATCH  /boards/:id(.:format)                                                                             boards#update
 #                                          PUT    /boards/:id(.:format)                                                                             boards#update
 #                                          DELETE /boards/:id(.:format)                                                                             boards#destroy
+#                     index_view_downloads POST   /index_view_downloads(.:format)                                                                   index_view_downloads#create
 #                       index_view_filters GET    /index_views/:index_view_id/filters(.:format)                                                     index_views/filters#index
 #                                          POST   /index_views/:index_view_id/filters(.:format)                                                     index_views/filters#create
 #                    new_index_view_filter GET    /index_views/:index_view_id/filters/new(.:format)                                                 index_views/filters#new
@@ -72,7 +78,9 @@ Rails.application.routes.draw do
   get "about/index"
   root "home#index"
 
-  resources :documents
+  resources :documents do
+    resources :fragments, only: [:update, :show, :create, :destroy], controller: "documents/fragments"
+  end
   resources :boards
   resources :index_view_downloads, only: [:create]
   resources :index_views do

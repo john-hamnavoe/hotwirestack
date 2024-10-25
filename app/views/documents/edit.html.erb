@@ -1,3 +1,17 @@
+<%= render Button::LinkComponent.new(text: t("buttons.close"), path: with_search_session_token(documents_path)) %>
 <%= render Forms::PageComponent.new(title: t(".title"), model: @document) do %>
-  <%= render "form", document: @document, search_session_token: search_session_token %>
+  <section class="py-12 px-4 max-w-7xl mx-auto">
+    <article class="prose prose-even">
+      <%= render "documents/fragments/new", document: @document, position: 0, search_session_token: search_session_token %>
+      <% @document.fragments.sort_by(&:position).each do |fragment| %>
+        <% editable_on_render = fragment.id == @select_fragment ? true : false %>
+        <%= turbo_frame_tag dom_id(fragment) do %>
+          <%= render "documents/fragments/fragment", fragment: fragment, editable_on_render: editable_on_render %>
+        <% end %>
+        <%= render "documents/fragments/new", document: @document, position: fragment.position + 1, search_session_token: search_session_token %>
+      <% end %>
+    </article>
+  </section>
 <% end %>
+
+<%= render Button::LinkComponent.new(text: t("buttons.open"), path: with_search_session_token(document_path(@document))) %>

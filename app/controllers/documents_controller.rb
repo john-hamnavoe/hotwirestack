@@ -20,6 +20,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
+    @select_fragment = params[:select_fragment].to_i
   end
 
   # POST /documents or /documents.json
@@ -41,7 +42,7 @@ class DocumentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_document
-    @document = Document.find(params.expect(:id))
+    @document = Document.includes(:fragments).find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.
