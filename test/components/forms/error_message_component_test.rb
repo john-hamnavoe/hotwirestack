@@ -8,6 +8,7 @@ class Forms::ErrorMessageComponentTest < ViewComponent::TestCase
     component = Forms::ErrorMessageComponent.new(model)
 
     render_inline(component)
+
     assert_no_selector "div", id: "error_explanation"
   end
 
@@ -17,6 +18,7 @@ class Forms::ErrorMessageComponentTest < ViewComponent::TestCase
     component = Forms::ErrorMessageComponent.new(model)
 
     render_inline(component)
+
     assert_selector "div", id: "error_explanation"
     assert_selector "ul", count: 1
     assert_selector "li", text: "Title can't be blank"

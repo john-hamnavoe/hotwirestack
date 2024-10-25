@@ -10,7 +10,7 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
-  has_many :index_views
+  has_many :index_views, dependent: :destroy
 
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "email", "logged_in", "name", "updated_at"]

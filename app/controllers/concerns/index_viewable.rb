@@ -3,8 +3,11 @@ module IndexViewable
 
   class_methods do
     def index_viewable(model_class)
+      # Disable the Rails/LexicallyScopedActionFilter cop for this block
+      # rubocop:disable Rails/LexicallyScopedActionFilter
       before_action -> { set_index_views(model_class) }, only: [:index]
       before_action :set_index_view, only: [:index]
+      # rubocop:enable Rails/LexicallyScopedActionFilter
     end
   end
 
@@ -13,11 +16,7 @@ module IndexViewable
   def set_index_views(model_class)
     @user = Current.user
     table_entity = model_class.table_entity
-    # print "Current.user: #{Current.user.inspect}"
-    # print "Current.user.index_views: #{Current.user.index_views.inspect}"
-    #  print "table_entity: #{table_entity.inspect}"
-    #  print "All Table Entities: #{TableEntity.all.inspect}"
-    #  print "#{model_class.name} Table Entity: #{table_entity.inspect}"
+
     @index_views = Current.user.index_views.where(table_entity: table_entity)
       .order(default: :desc, name: :asc)
   end

@@ -9,6 +9,7 @@ class Index::ConfigDropdownsComponentTest < ViewComponent::TestCase
 
   def test_buttons_renders
     render_inline(Index::ConfigDropdownsComponent.new(index_view: @index_view, refresh_frame: "freshing", refresh_path: "pathing", search_session_token: "XXXXXXX"))
+
     assert_selector "button", count: 2
   end
 end

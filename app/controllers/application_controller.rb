@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def respond_with_csv(records, index_view)
-    filename = [index_view.name, Date.today.to_s].join(" ") + ".csv"
+    filename = [index_view.name, Time.zone.today.to_s].join(" ") + ".csv"
     send_data index_view.generate_csv(records), filename: filename, content_type: "text/csv"
   end
 

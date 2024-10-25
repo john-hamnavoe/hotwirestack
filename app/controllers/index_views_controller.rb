@@ -7,14 +7,14 @@ class IndexViewsController < ApplicationController
     @index_views = Current.user.index_views.where(table_entity: @table_entity).order(:name)
   end
 
+  def show
+  end
+
   def new
     @index_view = IndexView.new(table_entity: @table_entity)
   end
 
   def edit
-  end
-
-  def show
   end
 
   def create

@@ -7,6 +7,7 @@ class DocumentsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit documents_path
+
     assert_selector "h1", text: "Documents"
   end
 
@@ -33,6 +34,7 @@ class DocumentsTest < ApplicationSystemTestCase
     visit documents_path
     click_on "Delete", match: :first
     accept_confirm
+
     assert_text "Document was successfully destroyed"
   end
 end

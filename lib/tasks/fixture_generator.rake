@@ -24,7 +24,7 @@ namespace :fixture_generator do
 
     puts tables_hash.to_yaml
 
-    File.write("#{Rails.root}/test/fixtures/table_entities.yml", tables_hash.to_yaml)
+    File.write(Rails.root.join("test/fixtures/table_entities.yml").to_s, tables_hash.to_yaml)
   end
 
   task table_columns: :environment do
@@ -52,7 +52,7 @@ namespace :fixture_generator do
 
     puts columns_hash.to_yaml
 
-    File.write("#{Rails.root}/test/fixtures/table_columns.yml", columns_hash.to_yaml)
+    File.write(Rails.root.join("test/fixtures/table_columns.yml").to_s, columns_hash.to_yaml)
   end
 
   task index_views: :environment do
@@ -80,7 +80,7 @@ namespace :fixture_generator do
 
     puts index_views_hash.to_yaml
 
-    File.write("#{Rails.root}/test/fixtures/index_views.yml", index_views_hash.to_yaml)
+    File.write(Rails.root.join("test/fixtures/index_views.yml").to_s, index_views_hash.to_yaml)
   end
 
   task index_view_columns: :environment do
@@ -107,7 +107,7 @@ namespace :fixture_generator do
 
     puts index_view_columns_hash.to_yaml
 
-    File.write("#{Rails.root}/test/fixtures/index_view_columns.yml", index_view_columns_hash.to_yaml)
+    File.write(Rails.root.join("test/fixtures/index_view_columns.yml").to_s, index_view_columns_hash.to_yaml)
   end
 
   task filters: :environment do
@@ -133,13 +133,13 @@ namespace :fixture_generator do
 
     puts filters_hash.to_yaml
 
-    File.write("#{Rails.root}/test/fixtures/filters.yml", filters_hash.to_yaml)
+    File.write(Rails.root.join("test/fixtures/filters.yml").to_s, filters_hash.to_yaml)
   end
 
   task active_filters: :environment do
     require "yaml"
 
-    tables = TableEntity.where(id: TableColumn.where(attribute_name: "active").pluck(:table_entity_id))
+    tables = TableEntity.where(id: TableColumn.where(attribute_name: "active").select(:table_entity_id))
     filter_conditional_group_hash = {}
     filter_condition_hash = {}
     tables.each do |table|
@@ -167,7 +167,7 @@ namespace :fixture_generator do
 
     puts filter_conditional_group_hash.to_yaml
     puts filter_condition_hash.to_yaml
-    File.write("#{Rails.root}/test/fixtures/filter_conditional_groups.yml", filter_conditional_group_hash.to_yaml)
-    File.write("#{Rails.root}/test/fixtures/filter_conditions.yml", filter_condition_hash.to_yaml)
+    File.write(Rails.root.join("test/fixtures/filter_conditional_groups.yml").to_s, filter_conditional_group_hash.to_yaml)
+    File.write(Rails.root.join("test/fixtures/filter_conditions.yml").to_s, filter_condition_hash.to_yaml)
   end
 end
