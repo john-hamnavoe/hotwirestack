@@ -1,0 +1,35 @@
+# == Schema Information
+#
+# Table name: fragments
+#
+#  id          :bigint           not null, primary key
+#  data        :string
+#  element     :string
+#  meta        :string
+#  position    :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  document_id :bigint           not null
+#
+# Indexes
+#
+#  index_fragments_on_document_id  (document_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (document_id => documents.id)
+#
+
+one:
+  document: one
+  element: h1
+  data: Hello World
+  position: 1
+  meta: MyString
+
+two:
+  document: two
+  element: h1
+  data: Hello World
+  position: 1
+  meta: MyString

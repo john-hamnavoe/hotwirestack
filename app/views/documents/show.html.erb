@@ -1,10 +1,9 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @document %>
-
-<div>
-  <%= link_to "Edit this document", edit_document_path(@document) %> |
-  <%= link_to "Back to documents", documents_path %>
-
-  <%= button_to "Destroy this document", @document, method: :delete %>
-</div>
+<%= render Button::LinkComponent.new(text: t("buttons.edit"), path: with_search_session_token(edit_document_path(@document))) %>
+<section class="py-12 px-4 max-w-7xl mx-auto">
+  <article class="prose">
+    <% @document.fragments.sort_by(&:position).each do |fragment| %>
+      <%= fragment.render %>
+    <% end %>
+  </article>
+</section>

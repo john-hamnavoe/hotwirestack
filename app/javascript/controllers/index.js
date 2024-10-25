@@ -4,11 +4,35 @@
 
 import { application } from "./application"
 
+import AddFragmentController from "./add_fragment_controller"
+application.register("add-fragment", AddFragmentController)
+
+import ClipboardController from "./clipboard_controller"
+application.register("clipboard", ClipboardController)
+
+import DropdownPositionController from "./dropdown_position_controller"
+application.register("dropdown-position", DropdownPositionController)
+
+import DropdownsController from "./dropdowns_controller"
+application.register("dropdowns", DropdownsController)
+
+import DropzoneController from "./dropzone_controller"
+application.register("dropzone", DropzoneController)
+
+import EditableController from "./editable_controller"
+application.register("editable", EditableController)
+
+import FormatController from "./format_controller"
+application.register("format", FormatController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 import NestedFormController from "./nested_form_controller"
 application.register("nested-form", NestedFormController)
+
+import PreController from "./pre_controller"
+application.register("pre", PreController)
 
 import ReloadDropdownController from "./reload_dropdown_controller"
 application.register("reload-dropdown", ReloadDropdownController)

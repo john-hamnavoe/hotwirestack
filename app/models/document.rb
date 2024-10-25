@@ -11,6 +11,7 @@
 class Document < ApplicationRecord
   include HasTableConfiguration
 
+  has_many :fragments, dependent: :destroy
   acts_as_taggable_on :tags
 
   def self.ransackable_attributes(auth_object = nil)
@@ -23,6 +24,7 @@ class Document < ApplicationRecord
     {header: "Title", attribute_name: "title", primary: true},
     {header: "Active", attribute_name: "active", method_proc: true},
     {header: "Edit", attribute_name: "edit", column_type: :action, sr_only: true},
-    {header: "Delete", attribute_name: "delete", column_type: :action, sr_only: true}
+    {header: "Delete", attribute_name: "delete", column_type: :action, sr_only: true},
+    {header: "Open", attribute_name: "open", column_type: :action, sr_only: true}
   )
 end

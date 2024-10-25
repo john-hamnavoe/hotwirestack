@@ -1,0 +1,2 @@
+module Documents::FragmentsHelper
+end

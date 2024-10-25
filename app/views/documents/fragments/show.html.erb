@@ -1,0 +1,4 @@
+<%= turbo_frame_tag dom_id(@fragment) do %>
+
+  <%= render "documents/fragments/fragment", fragment: @fragment, editable_on_render: false %>
+<% end %>
