@@ -56,6 +56,7 @@ group :development, :test do
   # Linting
   gem "erb_lint", require: false
   gem "standard"
+  gem "better_html"
   gem "rubocop-rails", require: false
   gem "rubocop-minitest", require: false
 end

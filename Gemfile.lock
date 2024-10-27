@@ -412,6 +412,7 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_list
   annotate
+  better_html
   bootsnap
   brakeman
   capybara
