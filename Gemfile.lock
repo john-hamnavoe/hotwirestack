@@ -151,6 +151,9 @@ GEM
     htmlentities (4.3.4)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
+    inline_svg (1.10.0)
+      activesupport (>= 3.0)
+      nokogiri (>= 1.6)
     io-console (0.7.2)
     irb (1.14.1)
       rdoc (>= 4.0.0)
@@ -421,6 +424,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   erb_lint
+  inline_svg
   jbuilder
   jsbundling-rails
   kamal (>= 2.0.0.rc2)
